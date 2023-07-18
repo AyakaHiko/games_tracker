@@ -78,18 +78,18 @@ services:
             - .env
 
     front.public:
-        build: ./front/public
-        volumes:
-            - ./front/public:/usr/src/app
-        command: sh -c " npm install && npm start "
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
-        networks:
-            - pv121
-        environment:
-            - NAME=front.public
-        env_file:
-            - .env
+            build: ./front/public
+            volumes:
+                        - ./front/public:/usr/src/app
+            command: sh -c " npm install && npm start"
+            extra_hosts:
+                        - 'host.docker.internal:host-gateway'
+            networks:
+                        - pv121
+            environment:
+                        - NAME=front.public
+            env_file:
+                        - .env
 
     nginx:
         image: nginx:alpine

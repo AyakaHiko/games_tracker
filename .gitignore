@@ -10,3 +10,4 @@ vendor
 .env.production
 
 /volumes
+/front/public/
