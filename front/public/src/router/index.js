@@ -1,5 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import Style from "@/views/StyleView.vue";
+import {createRouter, createWebHistory} from "vue-router";
 import Home from "@/views/HomeView.vue";
 
 const routes = [
@@ -8,34 +7,17 @@ const routes = [
       title: "Select style",
     },
     path: "/",
-    name: "style",
-    component: Style,
+    redirect: "/home",
   },
   {
     // Document title tag
     // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
     meta: {
-      title: "Dashboard",
+      title: "Home",
     },
-    path: "/dashboard",
-    name: "dashboard",
+    path: "/home",
+    name: "home",
     component: Home,
-  },
-  {
-    meta: {
-      title: "Tables",
-    },
-    path: "/tables",
-    name: "tables",
-    component: () => import("@/views/TablesView.vue"),
-  },
-  {
-    meta: {
-      title: "Forms",
-    },
-    path: "/forms",
-    name: "forms",
-    component: () => import("@/views/FormsView.vue"),
   },
   {
     meta: {
@@ -47,27 +29,20 @@ const routes = [
   },
   {
     meta: {
-      title: "Ui",
-    },
-    path: "/ui",
-    name: "ui",
-    component: () => import("@/views/UiView.vue"),
-  },
-  {
-    meta: {
-      title: "Responsive layout",
-    },
-    path: "/responsive",
-    name: "responsive",
-    component: () => import("@/views/ResponsiveView.vue"),
-  },
-  {
-    meta: {
       title: "Login",
     },
     path: "/login",
     name: "login",
-    component: () => import("@/views/LoginView.vue"),
+    component: () => import("@/views/Authorization/LoginView.vue"),
+  },
+
+  {
+    meta: {
+      title: "Register",
+    },
+    path: "/register",
+    name: "register",
+    component: () => import("@/views/Authorization/RegisterView.vue"),
   },
   {
     meta: {
@@ -80,7 +55,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
     return savedPosition || { top: 0 };

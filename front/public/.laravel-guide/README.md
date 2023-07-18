@@ -119,7 +119,7 @@ import { Head } from "@inertiajs/vue3";
 </template>
 ```
 
-Add route in `routes/web.php`. There's a `/dashboard` route already defined by default, so just replace `Inertia::render('Dashboard')` with `Inertia::render('HomeView')`:
+Add route in `routes/web.php`. There's a `/home` route already defined by default, so just replace `Inertia::render('Dashboard')` with `Inertia::render('HomeView')`:
 
 ```php
 Route::get('/dashboard', function () {

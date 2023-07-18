@@ -1,11 +1,11 @@
 <script setup>
-import { mdiForwardburger, mdiBackburger, mdiMenu } from "@mdi/js";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import {mdiForwardburger, mdiBackburger, mdiMenu} from "@mdi/js";
+import {ref} from "vue";
+import {useRouter} from "vue-router";
 import menuAside from "@/menuAside.js";
 import menuNavBar from "@/menuNavBar.js";
-import { useMainStore } from "@/stores/main.js";
-import { useStyleStore } from "@/stores/style.js";
+import {useMainStore} from "@/stores/main.js";
+import {useStyleStore} from "@/stores/style.js";
 import BaseIcon from "@/components/BaseIcon.vue";
 import FormControl from "@/components/FormControl.vue";
 import NavBar from "@/components/NavBar.vue";
@@ -77,7 +77,7 @@ const menuClick = (event, item) => {
           display="hidden lg:flex xl:hidden"
           @click.prevent="isAsideLgActive = true"
         >
-          <BaseIcon :path="mdiMenu" size="24" />
+          <BaseIcon :path="mdiMenu" size="24"/>
         </NavBarItemPlain>
         <NavBarItemPlain use-margin>
           <FormControl
@@ -95,7 +95,8 @@ const menuClick = (event, item) => {
         @menu-click="menuClick"
         @aside-lg-close-click="isAsideLgActive = false"
       />
-      <slot />
+
+      <slot/>
       <FooterBar>
       </FooterBar>
     </div>

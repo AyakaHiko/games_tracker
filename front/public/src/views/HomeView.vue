@@ -31,7 +31,6 @@ const mainStore = useMainStore();
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-
     </SectionMain>
   </LayoutAuthenticated>
 </template>

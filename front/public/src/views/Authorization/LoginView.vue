@@ -10,17 +10,20 @@ import FormControl from "@/components/FormControl.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import LayoutGuest from "@/layouts/LayoutGuest.vue";
+import { useAuthorizationStore } from "@/stores/authorization/authorization";
 
 const form = reactive({
-  login: "john.doe",
-  pass: "highly-secure-password-fYjUw-",
+  email: "timmy@tim.com",
+  password: "password",
   remember: true,
 });
 
 const router = useRouter();
-
-const submit = () => {
-  router.push("/dashboard");
+const authorizationStorage = useAuthorizationStore();
+const submit = async () => {
+  await authorizationStorage.doLogin(form);
+  if (authorizationStorage.isLogin) await router.push("/profile");
+  return false;
 };
 </script>
 
@@ -28,18 +31,18 @@ const submit = () => {
   <LayoutGuest>
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
       <CardBox :class="cardClass" is-form @submit.prevent="submit">
-        <FormField label="Login" help="Please enter your login">
+        <FormField label="Email" help="Please enter your email">
           <FormControl
-            v-model="form.login"
+            v-model="form.email"
             :icon="mdiAccount"
-            name="login"
+            name="email"
             autocomplete="username"
           />
         </FormField>
 
         <FormField label="Password" help="Please enter your password">
           <FormControl
-            v-model="form.pass"
+            v-model="form.password"
             :icon="mdiAsterisk"
             type="password"
             name="password"
@@ -57,7 +60,7 @@ const submit = () => {
         <template #footer>
           <BaseButtons>
             <BaseButton type="submit" color="info" label="Login" />
-            <BaseButton to="/dashboard" color="info" outline label="Back" />
+            <BaseButton to="/home" color="info" outline label="Back" />
           </BaseButtons>
         </template>
       </CardBox>

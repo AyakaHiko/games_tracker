@@ -6,9 +6,9 @@ import {
 
 export default [
   {
-    to: "/dashboard",
+    to: "/home",
     icon: mdiMonitor,
-    label: "Dashboard",
+    label: "Home",
   },
   {
     to: "/profile",
