@@ -1,0 +1,12 @@
+
+.idea/
+node_modules
+vendor
+*.log
+*.lock
+
+.env
+.env.backup
+.env.production
+
+/volumes
