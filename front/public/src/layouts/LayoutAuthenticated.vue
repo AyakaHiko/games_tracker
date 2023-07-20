@@ -1,17 +1,17 @@
 <script setup>
-import {mdiForwardburger, mdiBackburger, mdiMenu} from "@mdi/js";
-import {ref} from "vue";
-import {useRouter} from "vue-router";
+import { mdiForwardburger, mdiBackburger, mdiMenu } from "@mdi/js";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 import menuAside from "@/menuAside.js";
 import menuNavBar from "@/menuNavBar.js";
-import {useMainStore} from "@/stores/main.js";
-import {useStyleStore} from "@/stores/style.js";
-import BaseIcon from "@/components/BaseIcon.vue";
-import FormControl from "@/components/FormControl.vue";
-import NavBar from "@/components/NavBar.vue";
-import NavBarItemPlain from "@/components/NavBarItemPlain.vue";
-import AsideMenu from "@/components/AsideMenu.vue";
-import FooterBar from "@/components/FooterBar.vue";
+import { useMainStore } from "@/stores/main.js";
+import { useStyleStore } from "@/stores/style.js";
+import BaseIcon from "@/components/Elements/BaseIcon.vue";
+import FormControl from "@/components/Elements/Form/FormControl.vue";
+import NavBar from "@/components/Elements/NavBar/NavBar.vue";
+import NavBarItemPlain from "@/components/Elements/NavBar/NavBarItemPlain.vue";
+import AsideMenu from "@/components/Elements/AsideMenu/AsideMenu.vue";
+import FooterBar from "@/components/Elements/FooterBar.vue";
 
 useMainStore().setUser({
   name: "John Doe",
@@ -77,7 +77,7 @@ const menuClick = (event, item) => {
           display="hidden lg:flex xl:hidden"
           @click.prevent="isAsideLgActive = true"
         >
-          <BaseIcon :path="mdiMenu" size="24"/>
+          <BaseIcon :path="mdiMenu" size="24" />
         </NavBarItemPlain>
         <NavBarItemPlain use-margin>
           <FormControl
@@ -96,9 +96,8 @@ const menuClick = (event, item) => {
         @aside-lg-close-click="isAsideLgActive = false"
       />
 
-      <slot/>
-      <FooterBar>
-      </FooterBar>
+      <slot />
+      <FooterBar> </FooterBar>
     </div>
   </div>
 </template>

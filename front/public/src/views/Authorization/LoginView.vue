@@ -1,16 +1,18 @@
 <script setup>
-import { reactive } from "vue";
-import { useRouter } from "vue-router";
-import { mdiAccount, mdiAsterisk } from "@mdi/js";
-import SectionFullScreen from "@/components/SectionFullScreen.vue";
-import CardBox from "@/components/CardBox.vue";
-import FormCheckRadio from "@/components/FormCheckRadio.vue";
-import FormField from "@/components/FormField.vue";
-import FormControl from "@/components/FormControl.vue";
-import BaseButton from "@/components/BaseButton.vue";
-import BaseButtons from "@/components/BaseButtons.vue";
+import {reactive} from "vue";
+import {useRouter} from "vue-router";
+import {mdiAccount, mdiAsterisk} from "@mdi/js";
+import SectionFullScreen from "@/components/Elements/SectionFullScreen.vue";
+import CardBox from "@/components/Elements/CardBox/CardBox.vue";
+import FormCheckRadio from "@/components/Elements/Form/FormCheckRadio.vue";
+import FormField from "@/components/Elements/Form/FormField.vue";
+import FormControl from "@/components/Elements/Form/FormControl.vue";
+import BaseButton from "@/components/Elements/BaseButton.vue";
+import BaseButtons from "@/components/Elements/BaseButtons.vue";
 import LayoutGuest from "@/layouts/LayoutGuest.vue";
-import { useAuthorizationStore } from "@/stores/authorization/authorization";
+import {useAuthorizationStore} from "@/stores/authorization/authorization";
+import Loader from "@/components/Elements/Loader.vue";
+import {toast} from "vue3-toastify";
 
 const form = reactive({
   email: "timmy@tim.com",
@@ -22,8 +24,10 @@ const router = useRouter();
 const authorizationStorage = useAuthorizationStore();
 const submit = async () => {
   await authorizationStorage.doLogin(form);
+  if (authorizationStorage.isError) {
+    toast.error('authorizationStorage.error');
+  }
   if (authorizationStorage.isLogin) await router.push("/profile");
-  return false;
 };
 </script>
 
@@ -58,9 +62,10 @@ const submit = async () => {
         />
 
         <template #footer>
-          <BaseButtons>
-            <BaseButton type="submit" color="info" label="Login" />
-            <BaseButton to="/home" color="info" outline label="Back" />
+          <Loader v-if="authorizationStorage.isLoading"/>
+          <BaseButtons v-else>
+            <BaseButton type="submit" color="info" label="Login"/>
+            <!--            <BaseButton to="/home" color="info" outline label="Back" />-->
           </BaseButtons>
         </template>
       </CardBox>

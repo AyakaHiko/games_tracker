@@ -1,17 +1,18 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import LayoutGuest from "@/layouts/LayoutGuest.vue";
-import SectionFullScreen from "@/components/SectionFullScreen.vue";
-import CardBox from "@/components/CardBox.vue";
+import SectionFullScreen from "@/components/Elements/SectionFullScreen.vue";
+import CardBox from "@/components/Elements/CardBox/CardBox.vue";
 import { useRouter } from "vue-router";
-import FormField from "@/components/FormField.vue";
-import FormControl from "@/components/FormControl.vue";
+import FormField from "@/components/Elements/Form/FormField.vue";
+import FormControl from "@/components/Elements/Form/FormControl.vue";
 import { mdiAccount, mdiAsterisk } from "@mdi/js";
-import BaseButtons from "@/components/BaseButtons.vue";
-import BaseButton from "@/components/BaseButton.vue";
+import BaseButtons from "@/components/Elements/BaseButtons.vue";
+import BaseButton from "@/components/Elements/BaseButton.vue";
 
 import { useRegistrationStore } from "@/stores/authorization/registration";
 import { toast } from "vue3-toastify";
+import Loader from "@/components/Elements/Loader.vue";
 
 const form = reactive({
   email: "timmy@tim.com",
@@ -33,7 +34,6 @@ const submit = async () => {
       toast.error(registrationStorage.error);
       return false;
     } else {
-      console.log(data);
       await router.push("/login");
     }
   });
@@ -45,11 +45,7 @@ const submit = async () => {
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
       <CardBox :class="cardClass" is-form @submit.prevent="submit">
         <FormField label="Login" help="Please enter your login">
-          <FormControl
-            v-model="form.login"
-            :icon="mdiAccount"
-            name="login"
-          />
+          <FormControl v-model="form.login" :icon="mdiAccount" name="login" />
         </FormField>
 
         <FormField label="Email" help="Please enter your email">
@@ -79,7 +75,8 @@ const submit = async () => {
           />
         </FormField>
         <template #footer>
-          <BaseButtons>
+          <Loader v-if="registrationStorage.isPreload" />
+          <BaseButtons v-else>
             <BaseButton type="submit" color="info" label="Register" />
             <!--            <BaseButton to="/home" color="info" outline label="Back"/>-->
           </BaseButtons>

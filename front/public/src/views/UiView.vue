@@ -12,21 +12,21 @@ import {
   mdiReload,
   mdiTrendingUp,
 } from "@mdi/js";
-import SectionMain from "@/components/SectionMain.vue";
-import CardBox from "@/components/CardBox.vue";
-import BaseButtons from "@/components/BaseButtons.vue";
-import BaseButton from "@/components/BaseButton.vue";
-import NotificationBar from "@/components/NotificationBar.vue";
-import BaseDivider from "@/components/BaseDivider.vue";
-import CardBoxModal from "@/components/CardBoxModal.vue";
-import SectionTitle from "@/components/SectionTitle.vue";
-import FormField from "@/components/FormField.vue";
-import FormCheckRadioGroup from "@/components/FormCheckRadioGroup.vue";
+import SectionMain from "@/components/Elements/SectionMain.vue";
+import CardBox from "@/components/Elements/CardBox/CardBox.vue";
+import BaseButtons from "@/components/Elements/BaseButtons.vue";
+import BaseButton from "@/components/Elements/BaseButton.vue";
+import NotificationBar from "@/components/Elements/NotificationBar/NotificationBar.vue";
+import BaseDivider from "@/components/Elements/BaseDivider.vue";
+import CardBoxModal from "@/components/Elements/CardBox/CardBoxModal.vue";
+import SectionTitle from "@/components/Elements/SectionTitle.vue";
+import FormField from "@/components/Elements/Form/FormField.vue";
+import FormCheckRadioGroup from "@/components/Elements/Form/FormCheckRadioGroup.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
-import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
-import CardBoxComponentEmpty from "@/components/CardBoxComponentEmpty.vue";
-import CardBoxComponentTitle from "@/components/CardBoxComponentTitle.vue";
-import PillTag from "@/components/PillTag.vue";
+import SectionTitleLineWithButton from "@/components/Elements/SectionTitleLineWithButton.vue";
+import CardBoxComponentEmpty from "@/components/Elements/CardBox/CardBoxComponentEmpty.vue";
+import CardBoxComponentTitle from "@/components/Elements/CardBox/CardBoxComponentTitle.vue";
+import PillTag from "@/components/Elements/PillTag/PillTag.vue";
 
 const modalOneActive = ref(false);
 

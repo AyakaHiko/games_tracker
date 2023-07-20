@@ -3,20 +3,23 @@ import { defineStore } from "pinia";
 
 export const useAuthorizationStore = defineStore("authorization", {
   state: () => ({
-    isPreload: false,
+    isLoading: false,
     isError: false,
-    error: {},
+    error: "",
     isLogin: localStorage.getItem("isLogin") || null,
   }),
   actions: {
+    error(message) {
+      this.isError = true;
+      this.error = message;
+    },
     login(response) {
       localStorage.setItem("isLogin", true);
-      console.log('login')
-      console.log(response);
+      localStorage.setItem("token", response.authorization.token);
       this.isLogin = true;
     },
     async doLogin(userData) {
-      this.isPreload = true;
+      this.isLoading = true;
       await fetchService("/api/login/", {
         method: "POST",
         headers: {
@@ -26,21 +29,22 @@ export const useAuthorizationStore = defineStore("authorization", {
       })
         .then((response) => {
           this.login(response);
+          if (response.status === 401) {
+            this.error("Unauthorized");
+          }
+          return response;
         })
         .catch((error) => {
-          this.isError = true;
-          this.error = error;
+          error(error.message);
         })
-        .finally(() => {
-          this.isPreload = false;
-        });
+        .finally(() => (this.isLoading = false));
     },
     logout() {
-      this.isPreload = true;
+      this.isLoading = true;
       this.isLogin = false;
       localStorage.setItem("isLogin", false);
       localStorage.removeItem("token");
-      this.isPreload = false;
+      this.isLoading = false;
     },
   },
 });

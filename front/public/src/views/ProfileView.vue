@@ -8,17 +8,17 @@ import {
   mdiFormTextboxPassword,
   mdiGithub,
 } from "@mdi/js";
-import SectionMain from "@/components/SectionMain.vue";
-import CardBox from "@/components/CardBox.vue";
-import BaseDivider from "@/components/BaseDivider.vue";
-import FormField from "@/components/FormField.vue";
-import FormControl from "@/components/FormControl.vue";
-import FormFilePicker from "@/components/FormFilePicker.vue";
-import BaseButton from "@/components/BaseButton.vue";
-import BaseButtons from "@/components/BaseButtons.vue";
-import UserCard from "@/components/UserCard.vue";
+import SectionMain from "@/components/Elements/SectionMain.vue";
+import CardBox from "@/components/Elements/CardBox/CardBox.vue";
+import BaseDivider from "@/components/Elements/BaseDivider.vue";
+import FormField from "@/components/Elements/Form/FormField.vue";
+import FormControl from "@/components/Elements/Form/FormControl.vue";
+import FormFilePicker from "@/components/Elements/Form/FormFilePicker.vue";
+import BaseButton from "@/components/Elements/BaseButton.vue";
+import BaseButtons from "@/components/Elements/BaseButtons.vue";
+import UserCard from "@/components/Elements/User/UserCard.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
-import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
+import SectionTitleLineWithButton from "@/components/Elements/SectionTitleLineWithButton.vue";
 
 const mainStore = useMainStore();
 

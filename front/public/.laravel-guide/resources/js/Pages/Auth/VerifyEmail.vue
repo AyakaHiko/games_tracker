@@ -2,14 +2,14 @@
 import { useForm, Head, Link } from "@inertiajs/vue3";
 import { computed } from "vue";
 import LayoutGuest from "@/layouts/LayoutGuest.vue";
-import SectionFullScreen from "@/components/SectionFullScreen.vue";
-import CardBox from "@/components/CardBox.vue";
-import FormField from "@/components/FormField.vue";
-import BaseDivider from "@/components/BaseDivider.vue";
-import BaseButton from "@/components/BaseButton.vue";
+import SectionFullScreen from "@/components/Elements/SectionFullScreen.vue";
+import CardBox from "@/components/Elements/CardBox/CardBox.vue";
+import FormField from "@/components/Elements/Form/FormField.vue";
+import BaseDivider from "@/components/Elements/BaseDivider.vue";
+import BaseButton from "@/components/Elements/BaseButton.vue";
 import FormValidationErrors from "@/components/FormValidationErrors.vue";
-import NotificationBarInCard from "@/components/NotificationBarInCard.vue";
-import BaseLevel from "@/components/BaseLevel.vue";
+import NotificationBarInCard from "@/components/Elements/NotificationBar/NotificationBarInCard.vue";
+import BaseLevel from "@/components/Elements/BaseLevel.vue";
 
 const props = defineProps({
   status: {

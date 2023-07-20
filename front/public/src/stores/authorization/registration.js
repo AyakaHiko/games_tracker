@@ -3,13 +3,18 @@ import fetchService from "@/services/fetchService";
 
 export const useRegistrationStore = defineStore("registration", {
   state: () => ({
-    isPreload: false,
+    isLoading: false,
     isError: false,
-    error: {},
+    error: "",
   }),
   actions: {
+
+    error(message) {
+      this.isError = true;
+      this.error = message;
+    },
     async doRegister(newUser) {
-      this.isPreload = true;
+      this.isLoading = true;
       await fetchService("/api/register/", {
         method: "POST",
         headers: {
@@ -21,11 +26,10 @@ export const useRegistrationStore = defineStore("registration", {
           return response;
         })
         .catch((error) => {
-          this.isError = true;
-          this.error = error;
+          this.error(error.message);
         })
         .finally(() => {
-          this.isPreload = false;
+          this.isLoading = false;
         });
     },
   },

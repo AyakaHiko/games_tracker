@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import NotificationBarInCard from "@/components/NotificationBarInCard.vue";
+import NotificationBarInCard from "@/components/Elements/NotificationBar/NotificationBarInCard.vue";
 
 const errors = computed(() => usePage().props.errors);
 

@@ -40,7 +40,7 @@ class AuthController extends Controller
                 'token' => $token,
                 'type' => 'bearer',
             ]
-        ]);
+        ],201);
     }
 
     public function register(Request $request)

@@ -11,7 +11,7 @@ import {
   mdiChartPie,
 } from "@mdi/js";
 import * as chartConfig from "@/components/Charts/chart.config.js";
-import SectionMain from "@/components/SectionMain.vue";
+import SectionMain from "@/components/Elements/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 
 const chartData = ref(null);

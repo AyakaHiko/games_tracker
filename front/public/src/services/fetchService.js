@@ -1,7 +1,6 @@
 export default function (url, options = {}) {
   if (options.headers) {
     if (typeof options.headers.append === "function") {
-      // Если headers является объектом Headers, используем метод append
       options.headers.append(
         "authorization",
         `Bearer ${localStorage.getItem("token")}`
