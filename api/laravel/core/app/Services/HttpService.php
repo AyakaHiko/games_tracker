@@ -23,7 +23,6 @@ class HttpService implements IHttpService
                 'headers' => $headers,
                 'query' => $params,
             ]);
-
             $data = $response->getBody()->getContents();
             return json_decode($data, true);
         } catch (RequestException $e) {

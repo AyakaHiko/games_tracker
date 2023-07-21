@@ -1,8 +1,4 @@
-import {
-  mdiAccountCircle,
-  mdiMonitor,
-  mdiController,
-} from "@mdi/js";
+import { mdiAccountCircle, mdiMonitor, mdiController } from "@mdi/js";
 
 export default [
   {
@@ -16,7 +12,8 @@ export default [
     icon: mdiAccountCircle,
   },
   {
-    label: "Games",
+    to: "/games",
+    label: "Game Library",
     icon: mdiController,
     menu: [
       {

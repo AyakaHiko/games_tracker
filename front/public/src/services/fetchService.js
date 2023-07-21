@@ -14,6 +14,11 @@ export default function (url, options = {}) {
       //'Content-Type': 'application/json',
     });
   }
+  if (options.params) {
+    const params = new URLSearchParams(options.params);
+    url += `?${params.toString()}`;
+    delete options.params;
+  }
 
   return new Promise((resolve, reject) => {
 

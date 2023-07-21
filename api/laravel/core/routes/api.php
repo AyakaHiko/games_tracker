@@ -26,11 +26,6 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
 });
-//Route::controller(GamesController::class)->group(function (){
-//   Route::post('games','GetGames');
-//   Route::post('game','GetGameDetails');
-//});
-
 Route::resource('games', GamesController::class)->only([
     'index', 'show'
 ]);

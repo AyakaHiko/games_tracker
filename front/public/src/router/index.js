@@ -52,6 +52,14 @@ const routes = [
     name: "error",
     component: () => import("@/views/ErrorView.vue"),
   },
+  {
+    meta: {
+      title: "Game Library",
+    },
+    path: "/games",
+    name: "games",
+    component: () => import("@/views/Games/LibraryView.vue"),
+  },
 ];
 
 const router = createRouter({

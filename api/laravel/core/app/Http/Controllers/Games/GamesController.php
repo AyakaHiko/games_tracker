@@ -32,8 +32,7 @@ class GamesController extends Controller
                 'key' => $this->apiKey,
                 'page' => $page,
                 'page_size' => $pageSize,
-            ]
-            );
+            ]);
         } catch (ValidationException $e) {
             return response()->json(['error' => $e->errors()], 422);
         } catch (RequestException $e) {
