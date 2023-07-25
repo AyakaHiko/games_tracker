@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Services\GamesService;
 use App\Services\HttpService;
+use App\Services\Interfaces\IGamesService;
 use App\Services\Interfaces\IHttpService;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,6 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(IGamesService::class, GamesService::class);
         $this->app->bind(IHttpService::class, HttpService::class);
     }
 

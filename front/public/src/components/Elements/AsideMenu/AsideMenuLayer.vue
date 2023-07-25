@@ -5,6 +5,7 @@ import { useStyleStore } from "@/stores/style.js";
 import AsideMenuList from "@/components/Elements/AsideMenu/AsideMenuList.vue";
 import AsideMenuItem from "@/components/Elements/AsideMenu/AsideMenuItem.vue";
 import BaseIcon from "@/components/Elements/BaseIcon.vue";
+import {useMainStore} from "@/stores/main";
 
 defineProps({
   menu: {
@@ -24,6 +25,11 @@ const logoutItem = computed(() => ({
   isLogout: true,
 }));
 
+const mainStore = useMainStore();
+
+const logout = () => {
+mainStore.logout();
+};
 const menuClick = (event, item) => {
   emit("menu-click", event, item);
 };
@@ -70,7 +76,7 @@ const asideLgCloseClick = (event) => {
       </div>
 
       <ul>
-        <AsideMenuItem :item="logoutItem" @menu-click="menuClick" />
+        <AsideMenuItem :item="logoutItem" @menu-click="logout" />
       </ul>
     </div>
   </aside>

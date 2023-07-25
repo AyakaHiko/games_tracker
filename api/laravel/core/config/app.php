@@ -108,7 +108,7 @@ return [
     | localized telephone numbers, street address information and more.
     |
     */
-
+    'client' => 'predis',
     'faker_locale' => 'en_US',
 
     /*

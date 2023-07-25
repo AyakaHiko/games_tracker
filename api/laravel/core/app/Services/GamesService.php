@@ -1,42 +1,39 @@
 <?php
 
-namespace App\Http\Controllers\Games;
+namespace App\Services;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\GamePaginationRequest;
-
+use App\Models\Game;
 use App\Services\Interfaces\IGamesService;
 use App\Services\Interfaces\IHttpService;
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Validation\ValidationException;
 
-class GamesController extends Controller
+class GamesService implements IGamesService
 {
+    public function __construct(protected IHttpService $httpService)
+    {}
 
-
-    public function __construct(protected IGamesService $gamesService)
-    {
-    }
-
-    public function index(GamePaginationRequest $request)
+    public function index($page=1, $pageSize=10): \Illuminate\Http\JsonResponse
     {
         try {
-            $validatedData = $request->validated();
-            $page = $validatedData['page'] ?? 1;
-            $pageSize = $validatedData['page_size'] ?? 10;
-            return $this->gamesService->index($page, $pageSize);
+            $result = Game::query()
+                ->orderByDesc('metacritic')
+                ->paginate(perPage: $pageSize, page: $page);
+            return response()->json([
+                'result'=>$result
+            ],200);
         } catch (ValidationException $e) {
             return response()->json(['error' => $e->errors()], 422);
         } catch (RequestException $e) {
             return response()->json(['error' => 'Failed to fetch games.'], 500);
         }
     }
-
-    public function show(string $id)
+    public function show(string $id): \Illuminate\Http\JsonResponse
     {
         try {
-            $response = $this->gamesService->show($id);
+            $response = $this->httpService->makeRequest('GET', $this->url . '/games/' . $id, params:[
+                'key' => $this->apiKey,
+            ]);
             return response()->json($response);
         } catch (ValidationException $e) {
             return response()->json(['error' => $e->errors()], 422);

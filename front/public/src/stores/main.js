@@ -8,6 +8,9 @@ export const useMainStore = defineStore("main", {
     userEmail: null,
     userAvatar: null,
 
+    /**/
+    user:null,
+
     /* Field focus with ctrl+k (to register only once) */
     isFieldFocusRegistered: false,
 
@@ -16,6 +19,9 @@ export const useMainStore = defineStore("main", {
     history: [],
   }),
   actions: {
+    logout(){
+
+    },
     setUser(payload) {
       if (payload.name) {
         this.userName = payload.name;

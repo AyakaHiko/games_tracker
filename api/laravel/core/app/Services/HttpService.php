@@ -26,7 +26,6 @@ class HttpService implements IHttpService
             $data = $response->getBody()->getContents();
             return json_decode($data, true);
         } catch (RequestException $e) {
-            // Обработка ошибки при запросе API
             Log::error($e->getMessage());
             return null;
         }

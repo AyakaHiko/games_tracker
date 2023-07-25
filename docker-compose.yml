@@ -5,7 +5,7 @@ services:
         build:
             context: ./api/laravel/core
             dockerfile: Dockerfile
-        command: sh -c "composer install && /var/www/html/artisan serve --host=0.0.0.0"
+        command: sh -c "composer install --ignore-platform-reqs && /var/www/html/artisan serve --host=0.0.0.0"
         volumes:
             - './api/laravel/core:/var/www/html'
         extra_hosts:
@@ -25,6 +25,17 @@ services:
         image: 'redis:alpine'
         volumes:
             - './volumes/db/redis/sockets:/data'
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        networks:
+            - pv121
+
+    redis.laravel:
+        image: 'redis:alpine'
+        ports:
+            - "6379:6379"
+        volumes:
+            - './volumes/db/redis/laravel:/data'
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         networks:
@@ -109,7 +120,7 @@ services:
     db.mysql.main:
         image: 'mysql/mysql-server:latest'
         ports:
-            - '33121:3306'
+            - '3306:3306'
         volumes:
             - './volumes/db/mysql/main:/var/lib/mysql'
         extra_hosts:

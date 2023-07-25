@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Games\CacheGameController;
 use App\Http\Controllers\Games\GamesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +30,8 @@ Route::controller(AuthController::class)->group(function () {
 Route::resource('games', GamesController::class)->only([
     'index', 'show'
 ]);
+
+Route::get('/updGames', function () {
+    $controller = new CacheGameController();
+    $controller->UpdateGames();
+});

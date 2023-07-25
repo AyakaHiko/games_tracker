@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lists', function (Blueprint $table) {
+        Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('slug');
             $table->string('name');
-            $table->unsignedBigInteger('list_type_id');
-            $table->uuid('user_id'); // Add the foreign key column
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('list_type_id')->references('id')->on('list_types')->onDelete('cascade');
+            $table->string('background_image');
+            $table->date('released');
+            $table->integer('rating');
+            $table->integer('metacritic');
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lists');
+        Schema::dropIfExists('games');
     }
 };

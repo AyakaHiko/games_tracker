@@ -6,6 +6,7 @@ import {
   mdiHeartPlusOutline,
   mdiPlaylistPlus,
 } from "@mdi/js/commonjs/mdi";
+import BaseButton from "@/components/Elements/BaseButton.vue";
 
 defineProps({
   item: {
@@ -21,117 +22,32 @@ onMounted(() => {
 
 <template>
   <li>
-    <div class="container">
-      <div class="card-group vgr-cards">
-        <div class="card">
-          <div class="card-img-body">
+    <div class="flex align-top mb-1.5 border-gray-500 border-[1px] w-100">
+          <div class="mr-0.5">
             <img
-              class="card-img"
+              class="object-cover max-w-md h-auto"
               :src="item.background_image"
               alt="{{item.slug}}"
             />
           </div>
-          <div class="card-body">
-            <h4 class="card-title">{{ item.name }}</h4>
-            <p class="card-text"></p>
-<!--            <a href="#" class="btn btn-outline-primary">-->
-<!--              <BaseIcon-->
-<!--                :path="mdiPlaylistPlus"-->
-<!--                class="flex-none"-->
-<!--                w="w-16"-->
-<!--                :size="18"-->
-<!--              />-->
-<!--            </a>-->
-<!--            <a href="#" class="btn btn-outline-primary">-->
-<!--              <BaseIcon-->
-<!--                :path="mdiHeartPlusOutline"-->
-<!--                class="flex-none"-->
-<!--                w="w-16"-->
-<!--                :size="18"-->
-<!--              />-->
-<!--            </a>-->
-<!--            <a href="#" class="btn btn-outline-primary">-->
-<!--              <BaseIcon-->
-<!--                :path="mdiCheckCircleOutline"-->
-<!--                class="flex-none"-->
-<!--                w="w-16"-->
-<!--                :size="18"-->
-<!--              />-->
-<!--            </a>-->
+          <div>
+            <h4 class="">{{ item.name }}</h4>
+            <p class="">
+              <p class="font-bold">Genres:</p>
+              <ul v-for="genre in item.genres" class="list-group">
+                <li class="list-group-item">
+                {{ genre.name }}
+                </li>
+              </ul>
+            </p>
+            <p class="font-bold">Metacritic: <b>{{ item.metacritic }}</b></p>
+<BaseButton :outline="true" :icon-size="18" :icon="mdiPlaylistPlus" href="#"/>
+<BaseButton :outline="true" :icon-size="18" :icon="mdiHeartPlusOutline" href="#"/>
+<BaseButton :outline="true" :icon-size="18" :icon="mdiCheckCircleOutline" href="#"/>
           </div>
-        </div>
-      </div>
     </div>
   </li>
 </template>
 
 <style scoped>
-body {
-  margin-top: 20px;
-}
-
-.card {
-  border: none;
-}
-.card-img {
-  border-radius: 0;
-}
-
-.vgr-cards {
-  .card {
-    display: flex;
-    flex-flow: wrap;
-    flex: 100%;
-    margin-bottom: 40px;
-
-    &:nth-child(even) .card-img-body {
-      order: 2;
-    }
-
-    &:nth-child(even) .card-body {
-      padding-left: 0;
-      padding-right: 1.25rem;
-    }
-
-    @media (max-width: 576px) {
-      display: block;
-    }
-  }
-
-  .card-img-body {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-
-    @media (max-width: 576px) {
-      width: 100%;
-      height: 200px;
-      margin-bottom: 20px;
-    }
-  }
-
-  .card-img {
-    width: 100%;
-    height: auto;
-    position: absolute;
-    margin-left: 50%;
-    transform: translateX(-50%);
-
-    @media (max-width: 1140px) {
-      margin: 0;
-      transform: none;
-      width: 100%;
-      height: auto;
-    }
-  }
-
-  .card-body {
-    flex: 2;
-    padding: 0 0 0 1.25rem;
-
-    @media (max-width: 576px) {
-      padding: 0;
-    }
-  }
-}
 </style>

@@ -15,13 +15,5 @@ export default [
     to: "/games",
     label: "Game Library",
     icon: mdiController,
-    menu: [
-      {
-        label: "Item One",
-      },
-      {
-        label: "Item Two",
-      },
-    ],
   },
 ];

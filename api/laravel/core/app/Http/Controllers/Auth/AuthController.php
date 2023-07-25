@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -20,6 +21,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        Cache::set('test', 'test');
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',

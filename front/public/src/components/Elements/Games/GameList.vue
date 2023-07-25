@@ -13,15 +13,11 @@ onMounted(async () => {
   await getGames(page);
 });
 
-let page = ref(2);
-let games = ref(gamesStore.games)
-let pageCount = ref(gamesStore.pageSize);
+let page = ref(1);
+let pageCount = gamesStore.getPageCount();
 const getGames = async () => {
   try {
-    console.log(page);
     await gamesStore.getGames(page.value);
-    console.log(games);
-    console.log(gamesStore.games);
   } catch (err) {
     toast.error(err.message);
   }
@@ -30,7 +26,7 @@ const getGames = async () => {
 
 <template>
   <Loader v-if="gamesStore.isLoading" />
-  <ul v-else>
+  <ul v-else class="ml-1">
     <GameListItem
       v-for="game in gamesStore.games"
       :key="game.id"
@@ -42,7 +38,7 @@ const getGames = async () => {
       v-model="page"
       class="p-10"
       :pages="pageCount"
-      :range-size="1"
+      :range-size="4"
       active-color="#337aff"
       @update:modelValue="getGames"
     />
