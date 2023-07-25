@@ -73,6 +73,7 @@ class GamesApiService implements IGameApiService
             $url = $this->url . '/genres';
             do {
                 $data = $this->getData($url);
+                $url = $data['next'];
                 if (isset($data['results']) && is_array($data['results'])) {
                     foreach ($data['results'] as $genre) {
                         if (Genre::where('id', $genre['id'])->exists()) {
@@ -87,7 +88,7 @@ class GamesApiService implements IGameApiService
                         $newGenre->save();
                     }
                 }
-            } while ($this->url != null);
+            } while ($url != null);
         } catch (ValidationException|RequestException $e) {
             Log::error($e);
         }

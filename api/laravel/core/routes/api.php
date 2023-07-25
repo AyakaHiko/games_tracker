@@ -30,8 +30,13 @@ Route::controller(AuthController::class)->group(function () {
 Route::resource('games', GamesController::class)->only([
     'index', 'show'
 ]);
+Route::prefix('/update')->group(function () {
+    // Путь для обновления списка игр
+    Route::get('/games', [CacheGameController::class, 'UpdateGames']);
 
-Route::get('/updGames', function () {
-    $controller = new CacheGameController();
-    $controller->UpdateGames();
+    // Путь для обновления списка жанров
+    Route::get('/genres', [CacheGameController::class, 'UpdateGenres']);
+
+    // Путь для обновления деталей игры по ID
+    Route::get('/game/{id}', [CacheGameController::class, 'UpdateGameDetails']);
 });
