@@ -43,10 +43,17 @@ class GamesApiService implements IGameApiService
                 $url = $data['next'];
                 if ($data['results']) {
                     foreach ($data['results'] as $game) {
-                        if (Game::where('id', $game['id'])->exists())
-                            return;
+                        $gameId = $game['id'];
+                        $existingGame = Game::find($gameId);
+                        if ($existingGame) {
+                            $fieldToUpdate = [
+                                'popularity' => $game['added'],
+                            ];
+                            $existingGame->update($fieldToUpdate);
+                            continue;
+                        }
                         $newGame = Game::create([
-                            'id' => $game['id'],
+                            'id' => $gameId,
                             'slug' => $game['slug'],
                             'name' => $game['name'],
                             'released' => $game['released'],
@@ -96,7 +103,7 @@ class GamesApiService implements IGameApiService
 
     public function updateGameDetailsDatabase($id): void
     {
-        if(GameDetails::where('id', $id)->exists())
+        if (GameDetails::where('id', $id)->exists())
             return;
         try {
 

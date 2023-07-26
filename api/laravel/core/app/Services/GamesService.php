@@ -17,7 +17,7 @@ class GamesService implements IGamesService
     {
         try {
             $result = Game::query()
-                ->orderByDesc('metacritic')
+                ->orderByDesc('popularity')
                 ->paginate(perPage: $pageSize, page: $page);
             return response()->json([
                 'result'=>$result
