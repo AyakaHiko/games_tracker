@@ -7,6 +7,7 @@ use App\Models\Game;
 use App\Services\Interfaces\IGamesService;
 use App\Services\Interfaces\IHttpService;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -18,12 +19,10 @@ class GamesService implements IGamesService
     }
 
 
-    public function index(GamePaginationRequest $request): \Illuminate\Http\JsonResponse
+    public function index(GamePaginationRequest $request): JsonResponse
     {
-        Log::debug($request);
-
         $validatedData = $request->validated();
-       $page = $validatedData['page'] ?? 1;
+        $page = $validatedData['page'] ?? 1;
         $pageSize = $validatedData['page_size'] ?? 10;
         $searchQuery = $request['search'] ?? '';
         try {
@@ -35,6 +34,7 @@ class GamesService implements IGamesService
                 $result = Game::query()
                     ->orderByDesc('popularity')
                     ->where('name', 'like', '%' . $searchQuery . '%')
+                    ->with('genres')
                     ->paginate(perPage: $pageSize, page: $page);
 
                 Cache::put($cacheKey, $result, now()->addMinutes(30));
@@ -50,7 +50,7 @@ class GamesService implements IGamesService
         }
     }
 
-    public function show(string $id): \Illuminate\Http\JsonResponse
+    public function show(string $id): JsonResponse
     {
         try {
             $response = $this->httpService->makeRequest('GET', $this->url . '/games/' . $id, params: [

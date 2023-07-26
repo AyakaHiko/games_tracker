@@ -24,17 +24,17 @@ const form = reactive({
 const registrationStorage = useRegistrationStore();
 const router = useRouter();
 
-const submit = async () => {
+const submit = () => {
   if (form.password !== form.confirmedPassword) {
     toast.error("Passwords don't match");
     return false;
   }
-  await registrationStorage.doRegister(form).then(async (data) => {
+  registrationStorage.doRegister(form).then(() => {
     if (registrationStorage.isError) {
       toast.error(registrationStorage.error);
       return false;
     } else {
-      await router.push("/login");
+      router.push("/login");
     }
   });
 };
@@ -75,7 +75,7 @@ const submit = async () => {
           />
         </FormField>
         <template #footer>
-          <Loader v-if="registrationStorage.isPreload" />
+          <Loader v-if="registrationStorage.isLoading" />
           <BaseButtons v-else>
             <BaseButton type="submit" color="info" label="Register" />
             <!--            <BaseButton to="/home" color="info" outline label="Back"/>-->

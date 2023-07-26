@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from "vue";
+import {onMounted} from "vue";
 import BaseIcon from "@/components/Elements/BaseIcon.vue";
 import {
   mdiCheckCircleOutline,
@@ -20,28 +20,28 @@ defineProps({
 <template>
   <li>
     <div class="flex align-top mb-1.5 border-gray-500 border-[1px] w-100">
-          <div class="mr-0.5">
-            <img
-              class="object-cover max-w-md h-auto"
-              :src="item.background_image"
-              alt="{{item.slug}}"
-            />
-          </div>
-          <div>
-            <h4 class="">{{ item.name }}</h4>
-            <p class="">
-              <p class="font-bold">Genres:</p>
-              <ul v-for="genre in item.genres" class="list-group">
-                <li class="list-group-item">
-                {{ genre.name }}
-                </li>
-              </ul>
-            </p>
-            <p class="font-bold">Metacritic: <b>{{ item.metacritic }}</b></p>
-<BaseButton :outline="true" :icon-size="18" :icon="mdiPlaylistPlus" href="#"/>
-<BaseButton :outline="true" :icon-size="18" :icon="mdiHeartPlusOutline" href="#"/>
-<BaseButton :outline="true" :icon-size="18" :icon="mdiCheckCircleOutline" href="#"/>
-          </div>
+      <div class="mr-0.5">
+        <img
+          class="object-cover max-w-md h-auto"
+          :src="item.background_image"
+          alt="{{item.slug}}"
+        />
+      </div>
+      <div>
+        <h4 class="">{{ item.name }}</h4>
+        <p class="">
+          <p class="font-bold">Genres:</p>
+          <ul v-for="genre in item.genres" class="list-group">
+            <li class="list-group-item">
+              {{ genre.name }}
+            </li>
+          </ul>
+        </p>
+        <p class="font-bold">Metacritic: <b>{{ item.metacritic }}</b></p>
+        <BaseButton :outline="true" :icon-size="18" :icon="mdiPlaylistPlus" href="#"/>
+        <BaseButton :outline="true" :icon-size="18" :icon="mdiHeartPlusOutline" href="#"/>
+        <BaseButton :outline="true" :icon-size="18" :icon="mdiCheckCircleOutline" href="#"/>
+      </div>
     </div>
   </li>
 </template>

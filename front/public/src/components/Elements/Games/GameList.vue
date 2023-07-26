@@ -12,11 +12,12 @@ import FormControl from "@/components/Elements/Form/FormControl.vue";
 const gamesStore = useGamesStore();
 let page = ref(1);
 let pageCount = ref();
-onMounted(() => {
+
+const initGames = () => {
   gamesStore.getData(page.value).then((response) => {
     pageCount.value = response.result.last_page;
   });
-});
+};
 const getGames = async () => {
   try {
     await gamesStore.getData(page.value);
@@ -24,6 +25,14 @@ const getGames = async () => {
     toast.error(err.message);
   }
 };
+
+const handleSearchEnter = (event) => {
+  gamesStore.search = event.target.value;
+  initGames();
+};
+onMounted(() => {
+  initGames();
+});
 </script>
 
 <template>
@@ -32,7 +41,7 @@ const getGames = async () => {
       placeholder="Search (ctrl+k)"
       ctrl-k-focus
       transparent
-      borderless
+      @keyup.enter="handleSearchEnter"
     />
   </NavBarItemPlain>
   <Loader v-if="gamesStore.isLoading" />
