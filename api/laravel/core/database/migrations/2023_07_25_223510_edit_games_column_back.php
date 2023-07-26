@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('screenshots', function (Blueprint $table) {
-            $table->id();
-            $table->string('url');
-            $table->timestamps();
+        Schema::table('games', function (Blueprint $table) {
+            $table->string('background_image')->nullable()->change();
         });
     }
 
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('screenshots');
+        Schema::table('games', function (Blueprint $table) {
+            $table->string('background_image')->change();
+        });
     }
 };

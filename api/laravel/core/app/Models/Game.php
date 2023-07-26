@@ -21,6 +21,6 @@ class Game extends Model
 
     public function genres()
     {
-        return $this->belongsToMany(Genre::class);
+        return $this->belongsToMany(Genre::class,'genres_games', 'game_id', 'genre_id');
     }
 }

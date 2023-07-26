@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Genre extends Model
+class Developer extends Model
 {
     use HasFactory;
     protected $fillable = [
         'id' ,
         'slug',
         'name' ,
-        'background_image',
+        'image_background',
     ];
     public function games()
     {
-        return $this->belongsToMany(Game::class, 'genres_games', 'genre_id', 'game_id');
+        return $this->belongsToMany(GameDetails::class,'developers_game_details', 'developer_id', 'game_details_id');
     }
 }

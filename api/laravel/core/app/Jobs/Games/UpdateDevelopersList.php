@@ -2,24 +2,24 @@
 
 namespace App\Jobs\Games;
 
-use app\Services\Interfaces\IGameApiService;
+use App\Services\Interfaces\IGameApiService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
-class UpdateGameDetailsList implements ShouldQueue
+class UpdateDevelopersList implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(protected IGameApiService $apiService, protected $id)
+    public function __construct(protected IGameApiService $apiService)
     {
+
     }
 
     /**
@@ -27,6 +27,6 @@ class UpdateGameDetailsList implements ShouldQueue
      */
     public function handle(): void
     {
-        $this->apiService->updateGameDetailsDatabase($this->id);
+        $this->apiService->updateDevelopersDatabase();
     }
 }

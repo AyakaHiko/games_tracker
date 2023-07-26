@@ -33,6 +33,7 @@ Route::resource('games', GamesController::class)->only([
 Route::prefix('/update')->group(function () {
     // Путь для обновления списка игр
     Route::get('/games', [CacheGameController::class, 'UpdateGames']);
+//    Route::get('/developers', [CacheGameController::class, 'UpdateDevelopers']);
 
     // Путь для обновления списка жанров
     Route::get('/genres', [CacheGameController::class, 'UpdateGenres']);
