@@ -15,9 +15,6 @@ defineProps({
   },
 });
 
-onMounted(() => {
-  console.log("item");
-});
 </script>
 
 <template>

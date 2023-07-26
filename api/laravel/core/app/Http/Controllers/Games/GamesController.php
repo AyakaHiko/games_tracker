@@ -9,6 +9,7 @@ use App\Services\Interfaces\IGamesService;
 use App\Services\Interfaces\IHttpService;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class GamesController extends Controller
@@ -22,10 +23,7 @@ class GamesController extends Controller
     public function index(GamePaginationRequest $request)
     {
         try {
-            $validatedData = $request->validated();
-            $page = $validatedData['page'] ?? 1;
-            $pageSize = $validatedData['page_size'] ?? 10;
-            return $this->gamesService->index($page, $pageSize);
+            return $this->gamesService->index($request);
         } catch (ValidationException $e) {
             return response()->json(['error' => $e->errors()], 422);
         } catch (RequestException $e) {

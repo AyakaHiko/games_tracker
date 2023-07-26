@@ -7,31 +7,17 @@ export const useGamesStore = defineStore("games", {
     games: JSON.parse(localStorage.getItem(gamesPath)) || {},
     isLoading: false,
     pageSize: 10,
+    search:""
   }),
   actions: {
     error(message) {
       this.isError = true;
       this.error = message;
     },
-    async getPageCount() {
-      await fetchService("/api/games/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => {
-          console.log(response);
-          return response.result.lastPage;
-        })
-        .catch((error) => {
-          this.error(error.message);
-          return null;
-        });
-    },
-    async getGames(page = 1) {
+
+    async getData(page = 1) {
       this.isLoading = true;
-      await fetchService("/api/games/", {
+      return await fetchService("/api/games/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -39,11 +25,12 @@ export const useGamesStore = defineStore("games", {
         params: {
           page_size: this.pageSize,
           page: page,
+          search: this.search,
         },
       })
         .then((response) => {
           this.games = response.result.data;
-          return this.games;
+          return response;
         })
         .catch((error) => {
           this.error(error.message);

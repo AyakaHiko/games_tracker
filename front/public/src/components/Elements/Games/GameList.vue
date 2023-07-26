@@ -6,18 +6,20 @@ import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 import { onMounted, ref } from "vue";
 import { toast } from "vue3-toastify";
 import Loader from "@/components/Elements/Loader.vue";
+import NavBarItemPlain from "@/components/Elements/NavBar/NavBarItemPlain.vue";
+import FormControl from "@/components/Elements/Form/FormControl.vue";
 
 const gamesStore = useGamesStore();
-
-onMounted(async () => {
-  await getGames(page);
-});
-
 let page = ref(1);
-let pageCount = gamesStore.getPageCount();
+let pageCount = ref();
+onMounted(() => {
+  gamesStore.getData(page.value).then((response) => {
+    pageCount.value = response.result.last_page;
+  });
+});
 const getGames = async () => {
   try {
-    await gamesStore.getGames(page.value);
+    await gamesStore.getData(page.value);
   } catch (err) {
     toast.error(err.message);
   }
@@ -25,6 +27,14 @@ const getGames = async () => {
 </script>
 
 <template>
+  <NavBarItemPlain use-margin>
+    <FormControl
+      placeholder="Search (ctrl+k)"
+      ctrl-k-focus
+      transparent
+      borderless
+    />
+  </NavBarItemPlain>
   <Loader v-if="gamesStore.isLoading" />
   <ul v-else class="ml-1">
     <GameListItem

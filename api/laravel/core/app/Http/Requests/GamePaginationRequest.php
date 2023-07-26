@@ -16,7 +16,8 @@ class GamePaginationRequest extends FormRequest
         return [
             'page' => 'integer|min:1',
             'page_size' => 'integer|min:1',
-        ];
+            'search' => 'nullable|string',
+            ];
     }
     public function messages(): array
     {
@@ -25,6 +26,7 @@ class GamePaginationRequest extends FormRequest
             'page.min' => 'The page must be at least 1.',
             'page_size.integer' => 'The page size must be an integer.',
             'page_size.min' => 'The page size must be at least 1.',
+            'search.string' => 'The search parameter must be a string.',
         ];
     }
 }
