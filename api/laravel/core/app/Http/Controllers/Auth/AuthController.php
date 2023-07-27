@@ -8,6 +8,7 @@ use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
 use App\Services\Interfaces\IAuthorizationService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -27,17 +28,17 @@ class AuthController extends Controller
 
     public function register(RegistrationRequest $request)
     {
-        $res = $this->authorizationService->registration($request);
-        Log::debug('res');
-        Log::debug($res);
-        return $res;
+        return $this->authorizationService->registration($request);
     }
 
     public function logout()
     {
         return $this->authorizationService->logout();
-
     }
+    public function getUser(){
+        return $this->authorizationService->getUser();
+    }
+
 
     public function refresh()
     {

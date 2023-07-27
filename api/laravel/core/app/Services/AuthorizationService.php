@@ -9,11 +9,22 @@ use App\Services\Interfaces\IAuthorizationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class AuthorizationService implements IAuthorizationService
 {
-
+    public function getUser(): JsonResponse
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            return response()->json([
+                'user' => $user,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'User not authenticated',
+            ], 401);
+        }
+    }
     public function logout(): JsonResponse
     {
         Auth::logout();

@@ -11,7 +11,7 @@ import BaseDivider from "@/components/Elements/BaseDivider.vue";
 import BaseButton from "@/components/Elements/BaseButton.vue";
 import BaseButtons from "@/components/Elements/BaseButtons.vue";
 import SectionTitle from "@/components/Elements/SectionTitle.vue";
-import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
+import LayoutMain from "@/layouts/LayoutMain.vue";
 import SectionTitleLineWithButton from "@/components/Elements/SectionTitleLineWithButton.vue";
 import NotificationBarInCard from "@/components/Elements/NotificationBar/NotificationBarInCard.vue";
 
@@ -55,7 +55,7 @@ const formStatusSubmit = () => {
 </script>
 
 <template>
-  <LayoutAuthenticated>
+  <LayoutMain>
     <SectionMain>
       <SectionTitleLineWithButton
         :icon="mdiBallotOutline"
@@ -180,5 +180,5 @@ const formStatusSubmit = () => {
         </template>
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
+  </LayoutMain>
 </template>

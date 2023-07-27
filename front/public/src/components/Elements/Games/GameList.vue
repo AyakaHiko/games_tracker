@@ -1,12 +1,11 @@
 <script setup>
 import GameListItem from "@/components/Elements/Games/GameListItem.vue";
-import { useGamesStore } from "@/stores/games/games";
+import {useGamesStore} from "@/stores/games/games";
 import VPagination from "@hennge/vue3-pagination";
 import "@hennge/vue3-pagination/dist/vue3-pagination.css";
-import { onMounted, ref } from "vue";
-import { toast } from "vue3-toastify";
+import {onMounted, ref} from "vue";
+import {toast} from "vue3-toastify";
 import Loader from "@/components/Elements/Loader.vue";
-import NavBarItemPlain from "@/components/Elements/NavBar/NavBarItemPlain.vue";
 import FormControl from "@/components/Elements/Form/FormControl.vue";
 
 const gamesStore = useGamesStore();
@@ -27,6 +26,7 @@ const getGames = async () => {
 };
 
 const handleSearchEnter = (event) => {
+  event.preventDefault();
   gamesStore.search = event.target.value;
   initGames();
 };
@@ -36,15 +36,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <NavBarItemPlain use-margin>
-    <FormControl
-      placeholder="Search (ctrl+k)"
-      ctrl-k-focus
-      transparent
-      @keyup.enter="handleSearchEnter"
-    />
-  </NavBarItemPlain>
-  <Loader v-if="gamesStore.isLoading" />
+  <FormControl
+    placeholder="Search (ctrl+k)"
+    ctrl-k-focus
+    transparent
+    @keyup.enter="handleSearchEnter"
+    @blur="handleSearchEnter"
+  />
+  <Loader v-if="gamesStore.isLoading"/>
   <ul v-else class="ml-1">
     <GameListItem
       v-for="game in gamesStore.games"
