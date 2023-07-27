@@ -1,17 +1,12 @@
 <script setup>
-import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import GameList from "@/components/Elements/Games/GameList.vue";
-
+import LayoutMain from "@/layouts/LayoutMain.vue";
 </script>
 
 <template>
-  <LayoutAuthenticated>
-    <div>
-
-      <GameList></GameList>
-
-    </div>
-  </LayoutAuthenticated>
+  <LayoutMain>
+    <GameList />
+  </LayoutMain>
 </template>
 
 <style scoped></style>

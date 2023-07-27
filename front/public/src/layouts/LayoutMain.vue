@@ -1,24 +1,19 @@
 <script setup>
 import { mdiForwardburger, mdiBackburger, mdiMenu } from "@mdi/js";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import menuAside from "@/menuAside.js";
 import menuNavBar from "@/menuNavBar.js";
 import { useMainStore } from "@/stores/main.js";
 import { useStyleStore } from "@/stores/style.js";
 import BaseIcon from "@/components/Elements/BaseIcon.vue";
-import FormControl from "@/components/Elements/Form/FormControl.vue";
 import NavBar from "@/components/Elements/NavBar/NavBar.vue";
 import NavBarItemPlain from "@/components/Elements/NavBar/NavBarItemPlain.vue";
 import AsideMenu from "@/components/Elements/AsideMenu/AsideMenu.vue";
 import FooterBar from "@/components/Elements/FooterBar.vue";
 
-useMainStore().setUser({
-  name: "John Doe",
-  email: "john@example.com",
-  avatar:
-    "https://avatars.dicebear.com/api/avataaars/example.svg?options[top][]=shortHair&options[accessoriesChance]=93",
-});
+
+useMainStore().setUser();
 
 const layoutAsidePadding = "xl:pl-60";
 
@@ -40,7 +35,6 @@ const menuClick = (event, item) => {
   }
 
   if (item.isLogout) {
-    //
   }
 };
 </script>
@@ -80,6 +74,7 @@ const menuClick = (event, item) => {
           <BaseIcon :path="mdiMenu" size="24" />
         </NavBarItemPlain>
       </NavBar>
+
       <AsideMenu
         :is-aside-mobile-expanded="isAsideMobileExpanded"
         :is-aside-lg-active="isAsideLgActive"
