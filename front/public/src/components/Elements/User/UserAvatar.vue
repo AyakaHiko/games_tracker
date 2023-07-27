@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from "vue";
+import {useMainStore} from "@/stores/main";
 
 const props = defineProps({
   username: {
@@ -12,10 +13,9 @@ const props = defineProps({
   },
   api: {
     type: String,
-    default: "avataaars",
+    default: "avatars",
   },
 });
-
 const avatar = computed(
   () =>
     props.avatar ??
@@ -25,7 +25,6 @@ const avatar = computed(
     )}.svg`
 );
 
-const username = computed(() => props.username);
 </script>
 
 <template>

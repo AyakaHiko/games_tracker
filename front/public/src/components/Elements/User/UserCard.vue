@@ -10,7 +10,7 @@ import PillTag from "@/components/Elements/PillTag/PillTag.vue";
 
 const mainStore = useMainStore();
 
-const userName = computed(() => mainStore.userName);
+const userName = computed(() => mainStore.user.login);
 
 const userSwitchVal = ref(false);
 </script>

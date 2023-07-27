@@ -9,7 +9,7 @@ export const useRegistrationStore = defineStore("registration", {
   }),
   actions: {
 
-    error(message) {
+    logError(message) {
       this.isError = true;
       this.error = message;
     },
@@ -26,7 +26,7 @@ export const useRegistrationStore = defineStore("registration", {
           return response;
         })
         .catch((error) => {
-          this.error(error.message);
+          this.logError(error.message);
         })
         .finally(() => {
           this.isLoading = false;

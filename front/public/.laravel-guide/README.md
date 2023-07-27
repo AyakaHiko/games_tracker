@@ -353,7 +353,7 @@ const userName = computed(() => usePage().props.auth.user.name);
 </script>
 
 <template>
-  <UserAvatar :username="userName" api="initials">
+  <UserAvatar :username="user.login" api="initials">
     <slot />
   </UserAvatar>
 </template>

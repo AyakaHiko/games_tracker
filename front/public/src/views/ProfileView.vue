@@ -23,8 +23,8 @@ import SectionTitleLineWithButton from "@/components/Elements/SectionTitleLineWi
 const mainStore = useMainStore();
 
 const profileForm = reactive({
-  name: mainStore.userName,
-  email: mainStore.userEmail,
+  name: mainStore.user.login,
+  email: mainStore.user.email,
 });
 
 const passwordForm = reactive({

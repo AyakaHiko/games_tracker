@@ -23,11 +23,13 @@ const form = reactive({
 const router = useRouter();
 const authorizationStorage = useAuthorizationStore();
 const submit = async () => {
-  await authorizationStorage.doLogin(form);
-  if (authorizationStorage.isError) {
-    toast.error("authorizationStorage.error");
-  }
-  if (authorizationStorage.isLogin) await router.push("/profile");
+  authorizationStorage.doLogin(form).then(() => {
+    if (authorizationStorage.isError) {
+      toast.error(authorizationStorage.error);
+      return;
+    }
+    if (authorizationStorage.isLogin) router.push("/profile");
+  });
 };
 </script>
 
@@ -68,6 +70,10 @@ const submit = async () => {
             <!--            <BaseButton to="/home" color="info" outline label="Back" />-->
           </BaseButtons>
         </template>
+        <p>
+          Don't have an account?
+          <router-link to="/registration">Register</router-link>
+        </p>
       </CardBox>
     </SectionFullScreen>
   </LayoutGuest>

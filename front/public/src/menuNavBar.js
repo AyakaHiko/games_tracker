@@ -18,14 +18,6 @@ export default [
         icon: mdiListBox,
         label: "My Lists",
       },
-      {
-        isDivider: true,
-      },
-      {
-        icon: mdiLogout,
-        label: "Log Out",
-        isLogout: true,
-      },
     ],
   },
   {
@@ -33,11 +25,5 @@ export default [
     label: "Light/Dark",
     isDesktopNoLabel: true,
     isToggleLightDark: true,
-  },
-  {
-    icon: mdiLogout,
-    label: "Log out",
-    isDesktopNoLabel: true,
-    isLogout: true,
   },
 ];

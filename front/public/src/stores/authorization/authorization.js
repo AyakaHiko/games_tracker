@@ -9,7 +9,7 @@ export const useAuthorizationStore = defineStore("authorization", {
     isLogin: localStorage.getItem("isLogin") || null,
   }),
   actions: {
-    error(message) {
+    logError(message) {
       this.isError = true;
       this.error = message;
     },
@@ -30,12 +30,12 @@ export const useAuthorizationStore = defineStore("authorization", {
         .then((response) => {
           this.login(response);
           if (response.status === 401) {
-            this.error("Unauthorized");
+            this.logError("Unauthorized");
           }
           return response;
         })
         .catch((error) => {
-          error(error.message);
+          this.logError(error.message);
         })
         .finally(() => (this.isLoading = false));
     },

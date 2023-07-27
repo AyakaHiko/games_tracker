@@ -12,7 +12,6 @@ import NavBarItemPlain from "@/components/Elements/NavBar/NavBarItemPlain.vue";
 import AsideMenu from "@/components/Elements/AsideMenu/AsideMenu.vue";
 import FooterBar from "@/components/Elements/FooterBar.vue";
 
-
 useMainStore().setUser();
 
 const layoutAsidePadding = "xl:pl-60";

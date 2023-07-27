@@ -5,7 +5,8 @@ import { useStyleStore } from "@/stores/style.js";
 import AsideMenuList from "@/components/Elements/AsideMenu/AsideMenuList.vue";
 import AsideMenuItem from "@/components/Elements/AsideMenu/AsideMenuItem.vue";
 import BaseIcon from "@/components/Elements/BaseIcon.vue";
-import {useMainStore} from "@/stores/main";
+import { useMainStore } from "@/stores/main";
+import {useRouter} from "vue-router";
 
 defineProps({
   menu: {
@@ -26,10 +27,11 @@ const logoutItem = computed(() => ({
 }));
 
 const mainStore = useMainStore();
+const router = useRouter();
 
 const logout = () => {
-mainStore.logout();
-
+  mainStore.logout();
+  router.push("/login");
 };
 const menuClick = (event, item) => {
   emit("menu-click", event, item);

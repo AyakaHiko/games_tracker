@@ -38,11 +38,11 @@ const routes = [
 
   {
     meta: {
-      title: "Register",
+      title: "Registration",
     },
-    path: "/register",
-    name: "register",
-    component: () => import("@/views/Authorization/RegisterView.vue"),
+    path: "/registration",
+    name: "registration",
+    component: () => import("@/views/Authorization/RegistrationView.vue"),
   },
   {
     meta: {

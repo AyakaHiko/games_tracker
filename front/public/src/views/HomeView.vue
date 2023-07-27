@@ -16,12 +16,10 @@ onMounted(() => {
 });
 
 const mainStore = useMainStore();
-
 </script>
 
 <template>
   <LayoutMain>
-    <SectionMain>
-    </SectionMain>
+    <SectionMain> This is home page! </SectionMain>
   </LayoutMain>
 </template>

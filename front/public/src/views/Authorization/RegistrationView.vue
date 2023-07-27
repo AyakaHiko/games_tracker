@@ -32,7 +32,6 @@ const submit = () => {
   registrationStorage.doRegister(form).then(() => {
     if (registrationStorage.isError) {
       toast.error(registrationStorage.error);
-      return false;
     } else {
       router.push("/login");
     }
@@ -81,6 +80,10 @@ const submit = () => {
             <!--            <BaseButton to="/home" color="info" outline label="Back"/>-->
           </BaseButtons>
         </template>
+        <p>
+          Already registered?
+          <router-link to="/login">Log in</router-link>
+        </p>
       </CardBox>
     </SectionFullScreen>
   </LayoutGuest>
