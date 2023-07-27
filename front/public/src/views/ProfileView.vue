@@ -17,7 +17,7 @@ import FormFilePicker from "@/components/Elements/Form/FormFilePicker.vue";
 import BaseButton from "@/components/Elements/BaseButton.vue";
 import BaseButtons from "@/components/Elements/BaseButtons.vue";
 import UserCard from "@/components/Elements/User/UserCard.vue";
-import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
+import LayoutMain from "@/layouts/LayoutMain.vue";
 import SectionTitleLineWithButton from "@/components/Elements/SectionTitleLineWithButton.vue";
 
 const mainStore = useMainStore();
@@ -43,7 +43,7 @@ const submitPass = () => {
 </script>
 
 <template>
-  <LayoutAuthenticated>
+  <LayoutMain>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiAccount" title="Profile" main>
         <BaseButton
@@ -144,5 +144,5 @@ const submitPass = () => {
         </CardBox>
       </div>
     </SectionMain>
-  </LayoutAuthenticated>
+  </LayoutMain>
 </template>

@@ -9,14 +9,14 @@ import SectionMain from "@/components/Elements/SectionMain.vue";
 import NotificationBar from "@/components/Elements/NotificationBar/NotificationBar.vue";
 import TableSampleClients from "@/components/Elements/TableSampleClients.vue";
 import CardBox from "@/components/Elements/CardBox/CardBox.vue";
-import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
+import LayoutMain from "@/layouts/LayoutMain.vue";
 import SectionTitleLineWithButton from "@/components/Elements/SectionTitleLineWithButton.vue";
 import BaseButton from "@/components/Elements/BaseButton.vue";
 import CardBoxComponentEmpty from "@/components/Elements/CardBox/CardBoxComponentEmpty.vue";
 </script>
 
 <template>
-  <LayoutAuthenticated>
+  <LayoutMain>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiTableBorder" title="Tables" main>
         <BaseButton
@@ -47,5 +47,5 @@ import CardBoxComponentEmpty from "@/components/Elements/CardBox/CardBoxComponen
         <CardBoxComponentEmpty />
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
+  </LayoutMain>
 </template>

@@ -1,15 +1,10 @@
-import { mdiAccountCircle, mdiMonitor, mdiController } from "@mdi/js";
+import { mdiMonitor, mdiController } from "@mdi/js";
 
 export default [
   {
     to: "/home",
     icon: mdiMonitor,
     label: "Home",
-  },
-  {
-    to: "/profile",
-    label: "Profile",
-    icon: mdiAccountCircle,
   },
   {
     to: "/games",

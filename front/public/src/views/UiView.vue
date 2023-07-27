@@ -22,7 +22,7 @@ import CardBoxModal from "@/components/Elements/CardBox/CardBoxModal.vue";
 import SectionTitle from "@/components/Elements/SectionTitle.vue";
 import FormField from "@/components/Elements/Form/FormField.vue";
 import FormCheckRadioGroup from "@/components/Elements/Form/FormCheckRadioGroup.vue";
-import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
+import LayoutMain from "@/layouts/LayoutMain.vue";
 import SectionTitleLineWithButton from "@/components/Elements/SectionTitleLineWithButton.vue";
 import CardBoxComponentEmpty from "@/components/Elements/CardBox/CardBoxComponentEmpty.vue";
 import CardBoxComponentTitle from "@/components/Elements/CardBox/CardBoxComponentTitle.vue";
@@ -76,7 +76,7 @@ const styleStore = useStyleStore();
 </script>
 
 <template>
-  <LayoutAuthenticated>
+  <LayoutMain>
     <CardBoxModal
       v-model="modalOneActive"
       title="Please confirm action"
@@ -548,5 +548,5 @@ const styleStore = useStyleStore();
         <CardBoxComponentEmpty />
       </CardBox>
     </SectionMain>
-  </LayoutAuthenticated>
+  </LayoutMain>
 </template>

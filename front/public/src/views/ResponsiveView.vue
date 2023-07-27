@@ -1,11 +1,11 @@
 <script setup>
 import SectionTitle from "@/components/Elements/SectionTitle.vue";
 import SectionMain from "@/components/Elements/SectionMain.vue";
-import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
+import LayoutMain from "@/layouts/LayoutMain.vue";
 </script>
 
 <template>
-  <LayoutAuthenticated>
+  <LayoutMain>
     <SectionTitle first>Mobile & Tablet</SectionTitle>
 
     <SectionMain>
@@ -55,5 +55,5 @@ import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
         />
       </div>
     </SectionMain>
-  </LayoutAuthenticated>
+  </LayoutMain>
 </template>
