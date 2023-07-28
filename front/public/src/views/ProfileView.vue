@@ -19,6 +19,8 @@ import BaseButtons from "@/components/Elements/BaseButtons.vue";
 import UserCard from "@/components/Elements/User/UserCard.vue";
 import LayoutMain from "@/layouts/LayoutMain.vue";
 import SectionTitleLineWithButton from "@/components/Elements/SectionTitleLineWithButton.vue";
+import { useProfileStore } from "@/stores/profile/profileStorage";
+import Loader from "@/components/Elements/Loader.vue";
 
 const mainStore = useMainStore();
 
@@ -37,11 +39,11 @@ const submitProfile = () => {
   mainStore.updateUser(profileForm);
 };
 const selectedFile = ref(null);
-
+const profileStore = useProfileStore();
 const updateAvatar = () => {
   const formData = new FormData();
   formData.append("avatar", selectedFile.value);
-  mainStore.updateAvatar(formData);
+  profileStore.updateAvatar(formData);
 };
 </script>
 
@@ -55,40 +57,40 @@ const updateAvatar = () => {
             <FormFilePicker v-model="selectedFile" label="Upload" />
           </FormField>
           <template #footer>
-            <BaseButtons>
+            <Loader v-if="profileStore.isLoading" />
+            <BaseButtons v-else>
               <BaseButton color="info" type="submit" label="Submit" />
-              <BaseButton color="info" label="Options" outline />
             </BaseButtons>
           </template>
         </CardBox>
-<!--        <CardBox is-form @submit.prevent="submitProfile">-->
-<!--          <FormField label="Name" help="Required. Your name">-->
-<!--            <FormControl-->
-<!--              v-model="profileForm.login"-->
-<!--              :icon="mdiAccount"-->
-<!--              name="username"-->
-<!--              required-->
-<!--              autocomplete="username"-->
-<!--            />-->
-<!--          </FormField>-->
-<!--          <FormField label="E-mail" help="Required. Your e-mail">-->
-<!--            <FormControl-->
-<!--              v-model="profileForm.email"-->
-<!--              :icon="mdiMail"-->
-<!--              type="email"-->
-<!--              name="email"-->
-<!--              required-->
-<!--              autocomplete="email"-->
-<!--            />-->
-<!--          </FormField>-->
+        <!--        <CardBox is-form @submit.prevent="submitProfile">-->
+        <!--          <FormField label="Name" help="Required. Your name">-->
+        <!--            <FormControl-->
+        <!--              v-model="profileForm.login"-->
+        <!--              :icon="mdiAccount"-->
+        <!--              name="username"-->
+        <!--              required-->
+        <!--              autocomplete="username"-->
+        <!--            />-->
+        <!--          </FormField>-->
+        <!--          <FormField label="E-mail" help="Required. Your e-mail">-->
+        <!--            <FormControl-->
+        <!--              v-model="profileForm.email"-->
+        <!--              :icon="mdiMail"-->
+        <!--              type="email"-->
+        <!--              name="email"-->
+        <!--              required-->
+        <!--              autocomplete="email"-->
+        <!--            />-->
+        <!--          </FormField>-->
 
-<!--          <template #footer>-->
-<!--            <BaseButtons>-->
-<!--              <BaseButton color="info" type="submit" label="Submit" />-->
-<!--              <BaseButton color="info" label="Options" outline />-->
-<!--            </BaseButtons>-->
-<!--          </template>-->
-<!--        </CardBox>-->
+        <!--          <template #footer>-->
+        <!--            <BaseButtons>-->
+        <!--              <BaseButton color="info" type="submit" label="Submit" />-->
+        <!--              <BaseButton color="info" label="Options" outline />-->
+        <!--            </BaseButtons>-->
+        <!--          </template>-->
+        <!--        </CardBox>-->
 
         <!--        <CardBox is-form @submit.prevent="submitPass">-->
         <!--          <FormField-->

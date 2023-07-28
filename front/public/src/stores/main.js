@@ -54,14 +54,7 @@ export const useMainStore = defineStore("main", {
         console.log(e.message);
       }
     },
-    updateAvatar(formData) {
-      fetchService("/api/updateAvatar", {
-        method: "POST",
-        body: formData,
-      }).then((response) => {
-        this.user.avatar = response.avatarPath;
-      });
-    },
+
     fetch(sampleDataKey) {
       axios
         .get(`data-sources/${sampleDataKey}.json`)
