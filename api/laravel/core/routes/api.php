@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Games\CacheGameController;
 use App\Http\Controllers\Games\GamesController;
+use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,8 @@ Route::controller(AuthController::class)->group(function () {
 Route::resource('games', GamesController::class)->only([
     'index', 'show'
 ]);
+Route::post('/updateAvatar', [ProfileController::class, 'updateAvatar']);
+
 Route::prefix('/update')->group(function () {
     // Путь для обновления списка игр
     Route::get('/games', [CacheGameController::class, 'UpdateGames']);

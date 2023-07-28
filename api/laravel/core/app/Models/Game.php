@@ -23,4 +23,8 @@ class Game extends Model
     {
         return $this->belongsToMany(Genre::class,'genres_games', 'game_id', 'genre_id');
     }
+    public function lists()
+    {
+        return $this->belongsToMany(GameList::class,'game_list', 'game_id', 'list_id');
+    }
 }

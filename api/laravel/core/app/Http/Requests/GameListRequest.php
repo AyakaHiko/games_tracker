@@ -3,15 +3,16 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class GameRequest extends FormRequest
+class GameListRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -22,7 +23,9 @@ class GameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer',
+            "game_id"=>"integer|min:1",
+            "list_id"=>"integer|min:1",
+            "list_name"=>"nullable|sting",
         ];
     }
 }

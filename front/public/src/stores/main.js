@@ -4,18 +4,13 @@ import fetchService from "@/services/fetchService";
 
 export const useMainStore = defineStore("main", {
   state: () => ({
-    /* User */
-    userName: "null",
-    userEmail: "null",
-    userAvatar: "null",
-
     /**/
     user: {
       login: "",
       avatar: "",
       email: "",
     },
-
+    isLogin: true,
     /* Field focus with ctrl+k (to register only once) */
     isFieldFocusRegistered: false,
 
@@ -31,27 +26,42 @@ export const useMainStore = defineStore("main", {
           "Content-Type": "application/json",
         },
       });
+      this.isLogin = false;
     },
     setUser() {
       try {
-        fetchService("/api/getUser/", {
+        return fetchService("/api/getUser/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
         }).then((response) => {
+          console.log('resp')
           console.log(response);
-          this.user = {
+          if (response === undefined) {
+            console.log('under')
+            this.isLogin = false;
+            return null;
+          }
+          this.isLogin = true;
+          return (this.user = {
             login: response.user.login,
             avatar: response.user.avatar,
             email: response.user.email,
-          };
+          });
         });
       } catch (e) {
         console.log(e.message);
       }
     },
-
+    updateAvatar(formData) {
+      fetchService("/api/updateAvatar", {
+        method: "POST",
+        body: formData,
+      }).then((response) => {
+        this.user.avatar = response.avatarPath;
+      });
+    },
     fetch(sampleDataKey) {
       axios
         .get(`data-sources/${sampleDataKey}.json`)

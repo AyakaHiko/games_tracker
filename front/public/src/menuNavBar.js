@@ -1,6 +1,5 @@
 import {
   mdiAccount,
-  mdiLogout,
   mdiThemeLightDark,
   mdiListBox,
 } from "@mdi/js";

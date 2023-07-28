@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useMainStore } from "@/stores/main";
 import {
   mdiAccount,
@@ -23,51 +23,48 @@ import SectionTitleLineWithButton from "@/components/Elements/SectionTitleLineWi
 const mainStore = useMainStore();
 
 const profileForm = reactive({
-  name: mainStore.user.login,
+  login: mainStore.user.login,
   email: mainStore.user.email,
 });
 
-const passwordForm = reactive({
-  password_current: "",
-  password: "",
-  password_confirmation: "",
-});
+// const passwordForm = reactive({
+//   password_current: "",
+//   password: "",
+//   password_confirmation: "",
+// });
 
 const submitProfile = () => {
-  mainStore.setUser(profileForm);
+  mainStore.updateUser(profileForm);
 };
+const selectedFile = ref(null);
 
-const submitPass = () => {
-  //
+const updateAvatar = () => {
+  const formData = new FormData();
+  formData.append("avatar", selectedFile.value);
+  mainStore.updateAvatar(formData);
 };
 </script>
 
 <template>
   <LayoutMain>
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiAccount" title="Profile" main>
-        <BaseButton
-          href="https://github.com/justboil/admin-one-vue-tailwind"
-          target="_blank"
-          :icon="mdiGithub"
-          label="Star on GitHub"
-          color="contrast"
-          rounded-full
-          small
-        />
-      </SectionTitleLineWithButton>
-
       <UserCard class="mb-6" />
-
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <CardBox is-form @submit.prevent="submitProfile">
+        <CardBox is-form @submit.prevent="updateAvatar">
           <FormField label="Avatar" help="Max 500kb">
-            <FormFilePicker label="Upload" />
+            <FormFilePicker v-model="selectedFile" label="Upload" />
           </FormField>
-
+          <template #footer>
+            <BaseButtons>
+              <BaseButton color="info" type="submit" label="Submit" />
+              <BaseButton color="info" label="Options" outline />
+            </BaseButtons>
+          </template>
+        </CardBox>
+        <CardBox is-form @submit.prevent="submitProfile">
           <FormField label="Name" help="Required. Your name">
             <FormControl
-              v-model="profileForm.name"
+              v-model="profileForm.login"
               :icon="mdiAccount"
               name="username"
               required
@@ -93,55 +90,55 @@ const submitPass = () => {
           </template>
         </CardBox>
 
-        <CardBox is-form @submit.prevent="submitPass">
-          <FormField
-            label="Current password"
-            help="Required. Your current password"
-          >
-            <FormControl
-              v-model="passwordForm.password_current"
-              :icon="mdiAsterisk"
-              name="password_current"
-              type="password"
-              required
-              autocomplete="current-password"
-            />
-          </FormField>
+        <!--        <CardBox is-form @submit.prevent="submitPass">-->
+        <!--          <FormField-->
+        <!--            label="Current password"-->
+        <!--            help="Required. Your current password"-->
+        <!--          >-->
+        <!--            <FormControl-->
+        <!--              v-model="passwordForm.password_current"-->
+        <!--              :icon="mdiAsterisk"-->
+        <!--              name="password_current"-->
+        <!--              type="password"-->
+        <!--              required-->
+        <!--              autocomplete="current-password"-->
+        <!--            />-->
+        <!--          </FormField>-->
 
-          <BaseDivider />
+        <!--          <BaseDivider />-->
 
-          <FormField label="New password" help="Required. New password">
-            <FormControl
-              v-model="passwordForm.password"
-              :icon="mdiFormTextboxPassword"
-              name="password"
-              type="password"
-              required
-              autocomplete="new-password"
-            />
-          </FormField>
+        <!--          <FormField label="New password" help="Required. New password">-->
+        <!--            <FormControl-->
+        <!--              v-model="passwordForm.password"-->
+        <!--              :icon="mdiFormTextboxPassword"-->
+        <!--              name="password"-->
+        <!--              type="password"-->
+        <!--              required-->
+        <!--              autocomplete="new-password"-->
+        <!--            />-->
+        <!--          </FormField>-->
 
-          <FormField
-            label="Confirm password"
-            help="Required. New password one more time"
-          >
-            <FormControl
-              v-model="passwordForm.password_confirmation"
-              :icon="mdiFormTextboxPassword"
-              name="password_confirmation"
-              type="password"
-              required
-              autocomplete="new-password"
-            />
-          </FormField>
+        <!--          <FormField-->
+        <!--            label="Confirm password"-->
+        <!--            help="Required. New password one more time"-->
+        <!--          >-->
+        <!--            <FormControl-->
+        <!--              v-model="passwordForm.password_confirmation"-->
+        <!--              :icon="mdiFormTextboxPassword"-->
+        <!--              name="password_confirmation"-->
+        <!--              type="password"-->
+        <!--              required-->
+        <!--              autocomplete="new-password"-->
+        <!--            />-->
+        <!--          </FormField>-->
 
-          <template #footer>
-            <BaseButtons>
-              <BaseButton type="submit" color="info" label="Submit" />
-              <BaseButton color="info" label="Options" outline />
-            </BaseButtons>
-          </template>
-        </CardBox>
+        <!--          <template #footer>-->
+        <!--            <BaseButtons>-->
+        <!--              <BaseButton type="submit" color="info" label="Submit" />-->
+        <!--              <BaseButton color="info" label="Options" outline />-->
+        <!--            </BaseButtons>-->
+        <!--          </template>-->
+        <!--        </CardBox>-->
       </div>
     </SectionMain>
   </LayoutMain>

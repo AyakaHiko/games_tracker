@@ -1,6 +1,6 @@
 <script setup>
 import { mdiForwardburger, mdiBackburger, mdiMenu } from "@mdi/js";
-import { onMounted, ref } from "vue";
+import {onMounted, ref} from "vue";
 import { useRouter } from "vue-router";
 import menuAside from "@/menuAside.js";
 import menuNavBar from "@/menuNavBar.js";
@@ -31,9 +31,6 @@ router.beforeEach(() => {
 const menuClick = (event, item) => {
   if (item.isToggleLightDark) {
     styleStore.setDarkMode();
-  }
-
-  if (item.isLogout) {
   }
 };
 </script>

@@ -5,14 +5,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Requests\AuthorizationRequest;
 use App\Http\Requests\RegistrationRequest;
-use App\Models\User;
 use App\Services\Interfaces\IAuthorizationService;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {

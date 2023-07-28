@@ -42,6 +42,7 @@ const submit = () => {
 <template>
   <LayoutGuest>
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
+      <router-link to="/home" class="absolute left-0 top-0">>Home</router-link>
       <CardBox :class="cardClass" is-form @submit.prevent="submit">
         <FormField label="Login" help="Please enter your login">
           <FormControl v-model="form.login" :icon="mdiAccount" name="login" />

@@ -8,6 +8,7 @@ import BaseIcon from "@/components/Elements/BaseIcon.vue";
 import UserAvatarCurrentUser from "@/components/Elements/User/UserAvatarCurrentUser.vue";
 import NavBarMenuList from "@/components/Elements/NavBar/NavBarMenuList.vue";
 import BaseDivider from "@/components/Elements/BaseDivider.vue";
+import LoginRegisterUserNavItem from "@/components/Elements/NavBar/LoginRegisterUserNavItem.vue";
 
 const props = defineProps({
   item: {
@@ -84,10 +85,16 @@ onBeforeUnmount(() => {
     window.removeEventListener("click", forceClose);
   }
 });
+
+const mainStore = useMainStore();
 </script>
 
 <template>
   <BaseDivider v-if="item.isDivider" nav-bar />
+  <LoginRegisterUserNavItem
+    v-else-if="!mainStore.isLogin && item.isCurrentUser"
+    class="block lg:flex items-center relative cursor-pointer"
+  />
   <component
     :is="is"
     v-else

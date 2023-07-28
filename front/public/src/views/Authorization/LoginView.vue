@@ -36,6 +36,7 @@ const submit = async () => {
 <template>
   <LayoutGuest>
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
+      <router-link to="/home" class="absolute left-0 top-0">>Home</router-link>
       <CardBox :class="cardClass" is-form @submit.prevent="submit">
         <FormField label="Email" help="Please enter your email">
           <FormControl
@@ -72,7 +73,7 @@ const submit = async () => {
         </template>
         <p>
           Don't have an account?
-          <router-link to="/registration">Register</router-link>
+          <router-link to="/registration" class="mx-0.5">Register</router-link>
         </p>
       </CardBox>
     </SectionFullScreen>
