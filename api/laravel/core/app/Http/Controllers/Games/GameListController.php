@@ -13,8 +13,10 @@ class GameListController extends Controller
     public function __construct(protected IGameListService $gameListService)
     {
     }
+
     public function addGameToList(GameListRequest $request)
     {
+
     }
 
     public function removeGameFromList(GameListRequest $request)

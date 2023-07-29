@@ -3,7 +3,7 @@
 namespace App\Services;
 
 
-use App\Services\Interfaces\IImageService;
+use app\Services\Interfaces\IImageService;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;

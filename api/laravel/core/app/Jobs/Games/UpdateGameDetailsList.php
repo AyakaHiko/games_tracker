@@ -2,7 +2,7 @@
 
 namespace App\Jobs\Games;
 
-use app\Services\Interfaces\IGameApiService;
+use app\Services\Interfaces\IGameUpdateService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,7 +18,7 @@ class UpdateGameDetailsList implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(protected IGameApiService $apiService, protected $id)
+    public function __construct(protected IGameUpdateService $apiService, protected $id)
     {
     }
 

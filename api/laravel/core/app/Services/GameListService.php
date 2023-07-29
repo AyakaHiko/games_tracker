@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Http\Requests\GameListRequest;
-use App\Services\Interfaces\IGameListService;
+use app\Services\Interfaces\IGameListService;
 
 class GameListService implements IGameListService
 {

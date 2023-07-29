@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Requests\RequestAvatarUpdate;
-use App\Services\Interfaces\IImageService;
+use app\Services\Interfaces\IImageService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
