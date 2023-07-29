@@ -2,7 +2,7 @@
 
 namespace App\Services\Interfaces;
 
-interface IGameApiService
+interface IGameUpdateService
 {
     public function updateGamesDatabase();
     public function updateGenresDatabase();

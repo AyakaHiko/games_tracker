@@ -5,18 +5,15 @@ namespace App\Http\Controllers\Games;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GamePaginationRequest;
 
-use App\Services\Interfaces\IGamesService;
-use App\Services\Interfaces\IHttpService;
-use GuzzleHttp\Client;
+use App\Services\Interfaces\IGamesApiService;
 use GuzzleHttp\Exception\RequestException;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class GamesController extends Controller
 {
 
 
-    public function __construct(protected IGamesService $gamesService)
+    public function __construct(protected IGamesApiService $gamesService)
     {
     }
 

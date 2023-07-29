@@ -1,0 +1,194 @@
+openapi: 3.0.3
+info:
+  title: Swagger Games Tracker - OpenAPI 3.0
+  description: |-
+    # Здесь введите краткое описание вашего API и его функциональности.
+
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: ayayaka314@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost/api
+tags:
+  - name: games
+    description: API for Games
+    externalDocs:
+      description: Find out more about Games API
+      url: http://swagger.io
+paths:
+  /games:
+    get:
+      tags:
+        - games
+      summary: Get list of games
+      description: Get a paginated list of games
+      operationId: getGames
+      parameters:
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: per_page
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+        '422':
+          description: Unprocessable Entity (Validation Error)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      page:
+                        type: array
+                        items:
+                          type: string
+                      per_page:
+                        type: array
+                        items:
+                          type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /games/{id}:
+    get:
+      tags:
+        - games
+      summary: Get game details
+      description: Get details of a specific game by ID
+      operationId: getGameById
+      parameters:
+        - name: id
+          in: path
+          description: ID of the game to fetch
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '422':
+          description: Unprocessable Entity (Validation Error)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      id:
+                        type: array
+                        items:
+                          type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+components:
+  schemas:
+    Game:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 4200
+        slug:
+          type: string
+          example: "portal-2"
+        name:
+          type: string
+          example: "Portal 2"
+        released:
+          type: string
+          format: date
+          example: "2011-04-18"
+        background_image:
+          type: string
+          format: uri
+          example: "https://media.rawg.io/media/games/328/3283617cb7d75d67257fc58339188742.jpg"
+        rating:
+          type: number
+          format: float
+          example: 5.0
+        metacritic:
+          type: integer
+          example: 95
+        popularity:
+          type: integer
+          example: 17918
+      required:
+        - id
+        - slug
+        - name
+        - rating
+    GameDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 4200
+        slug:
+          type: string
+          example: "portal-2"
+        name_original:
+          type: string
+          example: "Portal 2"
+        description:
+          type: string
+          example: "Описание игры Portal 2"
+        background_image_additional:
+          type: string
+          format: uri
+          example: "https://media.rawg.io/media/games/328/3283617cb7d75d67257fc58339188742.jpg"
+        website:
+          type: string
+          format: uri
+          example: "https://www.example.com/game/portal-2"
+      required:
+        - id
+        - slug
+        - name_original

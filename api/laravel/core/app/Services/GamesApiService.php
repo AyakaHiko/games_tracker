@@ -2,152 +2,67 @@
 
 namespace App\Services;
 
-use App\Models\Developer;
+use App\Http\Requests\GamePaginationRequest;
 use App\Models\Game;
 use App\Models\GameDetails;
-use App\Models\Genre;
-use App\Services\Interfaces\IGameApiService;
-use Illuminate\Http\Client\RequestException;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
+use App\Services\Interfaces\IGamesApiService;
+use App\Services\Interfaces\IHttpService;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\ValidationException;
 
-class GamesApiService implements IGameApiService
+class GamesApiService implements IGamesApiService
 {
-    protected string $apiKey;
-    protected string $url;
-
-    public function __construct()
+    public function __construct(protected IHttpService $httpService)
     {
-        $this->apiKey = env('RAWG_API_KEY');
-        $this->url = env('RAWG_API_URL');
     }
 
-    /**
-     * Execute the job.
-     */
-    protected function getData($url, $params = [])
-    {
-        $response = Http::get($url, [
-                'key' => $this->apiKey,
-            ] + $params);
-        return $response->json();
-    }
 
-    public function updateGamesDatabase(): void
+    public function index(GamePaginationRequest $request): JsonResponse
     {
+        $validatedData = $request->validated();
+        $page = $validatedData['page'] ?? 1;
+        $pageSize = $validatedData['page_size'] ?? 10;
+        $searchQuery = $request['search'] ?? '';
         try {
-            $url = $this->url . '/games?key=' . $this->apiKey;
-            while ($url != null) {
-                $data = Http::get($url);
-                $url = $data['next'];
-                if ($data['results']) {
-                    foreach ($data['results'] as $game) {
-                        $gameId = $game['id'];
-                        $existingGame = Game::find($gameId);
-                        if ($existingGame) {
-                            $fieldToUpdate = [
-                                'popularity' => $game['added'],
-                            ];
-                            $existingGame->update($fieldToUpdate);
-                            continue;
-                        }
-                        $newGame = Game::create([
-                            'id' => $gameId,
-                            'slug' => $game['slug'],
-                            'name' => $game['name'],
-                            'released' => $game['released'],
-                            'background_image' => $game['background_image'],
-                            'rating' => $game['rating'],
-                            'metacritic' => $game['metacritic'],
-                            'popularity' => $game['added'],
-                        ]);
-                        $genres = $game['genres'];
-                        $genreIds = collect($genres)->pluck('id')->all();
-                        $newGame->genres()->attach($genreIds);
-                        $newGame->save();
-                    }
-                }
+            $cacheKey = 'games_page_' . $page . '_size_' . $pageSize . '_search_' . $searchQuery;
+
+            if (Cache::has($cacheKey)) {
+                $result = Cache::get($cacheKey);
+            } else {
+                $result = Game::query()
+                    ->orderByDesc('popularity')
+                    ->where('name', 'like', '%' . $searchQuery . '%')
+                    ->with('genres')
+                    ->paginate(perPage: $pageSize, page: $page);
+
+                Cache::put($cacheKey, $result, now()->addMinutes(30));
             }
-        } catch (ValidationException|RequestException $e) {
-            Log::error($e);
+
+            return response()->json([
+                'result' => $result
+            ], 200);
+        } catch (ValidationException $e) {
+            return response()->json(['error' => $e->errors()], 422);
+        } catch (RequestException $e) {
+            return response()->json(['error' => 'Failed to fetch games.'], 500);
         }
     }
 
-    public function updateGenresDatabase(): void
+    public function show(string $id): JsonResponse
     {
         try {
-            $url = $this->url . '/genres?key=' . $this->apiKey;
-            while ($url != null) {
-                $data = Http::get($url);
-                $url = $data['next'];
-                if ($data['results']) {
-                    foreach ($data['results'] as $genre) {
-                        if (Genre::where('id', $genre['id'])->exists()) {
-                            return;
-                        }
-                        $newGenre = Genre::create([
-                            'id' => $genre['id'],
-                            'slug' => $genre['slug'],
-                            'name' => $genre['name'],
-                            'background_image' => $genre['image_background'],
-                        ]);
-                        $newGenre->save();
-                    }
-                }
-            };
-        } catch (ValidationException|RequestException $e) {
-            Log::error($e);
-        }
-    }
-
-    public function updateGameDetailsDatabase($id): void
-    {
-        if (GameDetails::where('id', $id)->exists())
-            return;
-        try {
-
-            $url = $this->url . '/games/' . $id;
-            $data = $this->getData($url);
-            $newDetails = GameDetails::create([
-                'id' => $data['id'],
-                'slug' => $data['slug'],
-                'name_original' => $data['name_original'],
-                'description' => $data['description'],
-                'background_image_additional' => $data['background_image_additional'],
-                'website' => $data['website'],
-            ]);
-            $developers = $data['developers'];
-            $developerIds = collect($developers)->pluck('id')->all();
-            $newDetails->developers()->attach($developerIds);
-            $newDetails->save();
-        } catch (ValidationException|RequestException $e) {
-            Log::error($e);
-        }
-    }
-
-    public function updateDevelopersDatabase()
-    {
-        try {
-            $url = $this->url . '/developers?key=' . $this->apiKey;
-            while ($url != null) {
-                $data = Http::get($url);
-                $url = $data['next'];
-                if ($data['results']) {
-                    foreach ($data['results'] as $developer) {
-                        if (Developer::where('id', $developer['id'])->exists()) continue;
-                        $newDeveloper = Developer::create([
-                            'id' => $developer['id'],
-                            'slug' => $developer['slug'],
-                            'name' => $developer['name'],
-                            'image_background' => $developer['image_background'],
-                        ]);
-                        $newDeveloper->save();
-                    }
-                }
-            };
-        } catch (ValidationException|RequestException $e) {
-            Log::error($e);
+            $game = GameDetails::find($id);
+            if(!$game)
+            {
+                $game = (new GamesUpdateService)->updateGameDetailsDatabase($id);
+            }
+            return response()->json($game);
+        } catch (ValidationException $e) {
+            return response()->json(['error' => $e->errors()], 422);
+        } catch (RequestException $e) {
+            return response()->json(['error' => 'Failed to fetch game details.'], 500);
         }
     }
 }
