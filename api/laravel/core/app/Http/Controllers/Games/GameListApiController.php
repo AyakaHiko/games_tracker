@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Games;
 
 use App\Http\Controllers\Controller;
 use app\Http\Requests\GameListApi\GameListIndexRequest;
+use App\Http\Requests\GameListApi\GameListStoreRequest;
 use Illuminate\Http\Request;
 
 class GameListApiController extends Controller
@@ -19,7 +20,7 @@ class GameListApiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(GameListIndexRequest $request)
+    public function store(GameListStoreRequest $request)
     {
         //
     }

@@ -6,7 +6,7 @@ import AsideMenuList from "@/components/Elements/AsideMenu/AsideMenuList.vue";
 import AsideMenuItem from "@/components/Elements/AsideMenu/AsideMenuItem.vue";
 import BaseIcon from "@/components/Elements/BaseIcon.vue";
 import { useMainStore } from "@/stores/main";
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 
 defineProps({
   menu: {
@@ -79,7 +79,11 @@ const asideLgCloseClick = (event) => {
       </div>
 
       <ul>
-        <AsideMenuItem :item="logoutItem" @menu-click="logout" />
+        <AsideMenuItem
+          v-if="mainStore.isLogin"
+          :item="logoutItem"
+          @menu-click="logout"
+        />
       </ul>
     </div>
   </aside>

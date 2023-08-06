@@ -1,6 +1,4 @@
 <script setup>
-import {onMounted} from "vue";
-import BaseIcon from "@/components/Elements/BaseIcon.vue";
 import {
   mdiCheckCircleOutline,
   mdiHeartPlusOutline,
@@ -14,7 +12,6 @@ defineProps({
     required: true,
   },
 });
-
 </script>
 
 <template>
@@ -28,23 +25,40 @@ defineProps({
         />
       </div>
       <div>
-        <h4 class="">{{ item.name }}</h4>
-        <p class="">
-          <p class="font-bold">Genres:</p>
-          <ul v-for="genre in item.genres" class="list-group">
-            <li class="list-group-item">
-              {{ genre.name }}
-            </li>
-          </ul>
+        <h4>{{ item.name }}</h4>
+        <hr>
+        <p class="font-bold">Genres:</p>
+        <ul v-for="genre in item.genres" :key="genre" class="list-group">
+          <li class="list-group-item">
+            {{ genre.name }}
+          </li>
+        </ul>
+        <hr>
+
+        <p class="font-bold">
+          Metacritic: <b>{{ item.metacritic }}</b>
         </p>
-        <p class="font-bold">Metacritic: <b>{{ item.metacritic }}</b></p>
-        <BaseButton :outline="true" :icon-size="18" :icon="mdiPlaylistPlus" href="#"/>
-        <BaseButton :outline="true" :icon-size="18" :icon="mdiHeartPlusOutline" href="#"/>
-        <BaseButton :outline="true" :icon-size="18" :icon="mdiCheckCircleOutline" href="#"/>
+        <BaseButton
+          :outline="true"
+          :icon-size="18"
+          :icon="mdiPlaylistPlus"
+          href="#"
+        />
+        <BaseButton
+          :outline="true"
+          :icon-size="18"
+          :icon="mdiHeartPlusOutline"
+          href="#"
+        />
+        <BaseButton
+          :outline="true"
+          :icon-size="18"
+          :icon="mdiCheckCircleOutline"
+          href="#"
+        />
       </div>
     </div>
   </li>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

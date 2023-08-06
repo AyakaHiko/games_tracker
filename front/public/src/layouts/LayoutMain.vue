@@ -1,19 +1,19 @@
 <script setup>
 import { mdiForwardburger, mdiBackburger, mdiMenu } from "@mdi/js";
-import {onMounted, ref} from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import menuAside from "@/menuAside.js";
 import menuNavBar from "@/menuNavBar.js";
-import { useMainStore } from "@/stores/main.js";
 import { useStyleStore } from "@/stores/style.js";
 import BaseIcon from "@/components/Elements/BaseIcon.vue";
 import NavBar from "@/components/Elements/NavBar/NavBar.vue";
 import NavBarItemPlain from "@/components/Elements/NavBar/NavBarItemPlain.vue";
 import AsideMenu from "@/components/Elements/AsideMenu/AsideMenu.vue";
 import FooterBar from "@/components/Elements/FooterBar.vue";
+import Loader from "@/components/Elements/Loader.vue";
+import { useMainStore } from "@/stores/main";
 
-useMainStore().setUser();
-
+const mainStore = useMainStore();
 const layoutAsidePadding = "xl:pl-60";
 
 const styleStore = useStyleStore();
@@ -36,7 +36,11 @@ const menuClick = (event, item) => {
 </script>
 
 <template>
+  <div v-if="mainStore.isLoading">
+    <Loader />
+  </div>
   <div
+    v-else
     :class="{
       dark: styleStore.darkMode,
       'overflow-hidden lg:overflow-visible': isAsideMobileExpanded,

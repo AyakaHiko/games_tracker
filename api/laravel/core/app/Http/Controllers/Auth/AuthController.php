@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Requests\AuthorizationRequest;
 use App\Http\Requests\RegistrationRequest;
-use app\Services\Interfaces\IAuthorizationService;
+use App\Services\Interfaces\IAuthorizationService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 

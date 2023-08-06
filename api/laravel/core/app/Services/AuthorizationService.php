@@ -5,15 +5,18 @@ namespace App\Services;
 use App\Http\Requests\AuthorizationRequest;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
-use app\Services\Interfaces\IAuthorizationService;
+use App\Services\Interfaces\IAuthorizationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AuthorizationService implements IAuthorizationService
 {
+
     public function getUser(): JsonResponse
     {
+        Log::debug('getUser');
         if (Auth::check()) {
             $user = Auth::user();
             return response()->json([

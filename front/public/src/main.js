@@ -27,8 +27,7 @@ const mainStore = useMainStore(pinia);
 const styleStore = useStyleStore(pinia);
 
 /* Fetch sample data */
-mainStore.fetch("clients");
-mainStore.fetch("history");
+mainStore.getUser();
 
 /* App style */
 styleStore.setStyle(localStorage[styleKey] ?? "basic");

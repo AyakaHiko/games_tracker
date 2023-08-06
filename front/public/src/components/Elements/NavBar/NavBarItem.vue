@@ -93,7 +93,7 @@ const mainStore = useMainStore();
   <BaseDivider v-if="item.isDivider" nav-bar />
   <LoginRegisterUserNavItem
     v-else-if="!mainStore.isLogin && item.isCurrentUser"
-    class="block lg:flex items-center relative cursor-pointer"
+    :class="'block lg:flex items-center relative cursor-pointer'"
   />
   <component
     :is="is"

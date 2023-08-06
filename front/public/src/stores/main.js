@@ -1,22 +1,18 @@
 import { defineStore } from "pinia";
-import axios from "axios";
 import fetchService from "@/services/fetchService";
 
 export const useMainStore = defineStore("main", {
   state: () => ({
     /**/
+    isLoading: false,
     user: {
       login: "",
       avatar: "",
       email: "",
     },
-    isLogin: true,
+    isLogin: false,
     /* Field focus with ctrl+k (to register only once) */
     isFieldFocusRegistered: false,
-
-    /* Sample data (commonly used) */
-    clients: [],
-    history: [],
   }),
   actions: {
     async logout() {
@@ -28,44 +24,34 @@ export const useMainStore = defineStore("main", {
       });
       this.isLogin = false;
     },
-    setUser() {
+    setUser(user) {
+      this.user = {
+        login: user.login,
+        avatar: user.avatar,
+        email: user.email,
+      };
+      this.isLogin = true;
+    },
+    getUser() {
+      console.log("start getting user");
+      this.isLoading = true;
       try {
-        return fetchService("/api/getUser/", {
+        fetchService("/api/getUser/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
         }).then((response) => {
-          console.log('resp')
-          console.log(response);
           if (response === undefined) {
-            console.log('under')
             this.isLogin = false;
-            return null;
+          } else {
+            this.setUser(response.user);
           }
-          this.isLogin = true;
-          return (this.user = {
-            login: response.user.login,
-            avatar: response.user.avatar,
-            email: response.user.email,
-          });
+          this.isLoading = false;
         });
       } catch (e) {
         console.log(e.message);
       }
-    },
-
-    fetch(sampleDataKey) {
-      axios
-        .get(`data-sources/${sampleDataKey}.json`)
-        .then((r) => {
-          if (r.data && r.data.data) {
-            this[sampleDataKey] = r.data.data;
-          }
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
     },
   },
 });

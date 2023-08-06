@@ -1,5 +1,6 @@
 import fetchService from "@/services/fetchService";
 import { defineStore } from "pinia";
+import {useMainStore} from "@/stores/main";
 
 export const useAuthorizationStore = defineStore("authorization", {
   state: () => ({
@@ -15,6 +16,7 @@ export const useAuthorizationStore = defineStore("authorization", {
     },
     login(response) {
       localStorage.setItem("isLogin", true);
+      useMainStore().setUser(response.user);
       localStorage.setItem("token", response.authorization.token);
       this.isLogin = true;
     },

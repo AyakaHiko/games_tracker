@@ -1,18 +1,17 @@
 <?php
 
-namespace app\Http\Requests\GameListApi;
+namespace App\Http\Requests\GameListApi;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GameListIndexRequest extends FormRequest
+class GameListUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-//        return Auth::check();
-        return true;
+        return false;
     }
 
     /**
@@ -23,7 +22,7 @@ class GameListIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "user_id"=>"required"
+            //
         ];
     }
 }
