@@ -3,18 +3,15 @@
 namespace App\Services;
 
 use App\Http\Requests\GameListRequest;
-use app\Services\Interfaces\IGameListService;
+use App\Services\Interfaces\IGameListService;
 
 class GameListService implements IGameListService
 {
-
-
         public function addGameToList(GameListRequest $request)
         {
             $validatedData = $request->validated();
             $gameId = $validatedData['game_id'];
             $listId = $validatedData['list_id'];
-
         }
 
     public function removeGameFromList(GameListRequest $request)

@@ -1,5 +1,7 @@
 <script setup>
 import AsideMenuItem from "@/components/Elements/AsideMenu/AsideMenuItem.vue";
+import { useMainStore } from "@/stores/main";
+import {useRouter} from "vue-router";
 
 defineProps({
   isDropdownList: Boolean,

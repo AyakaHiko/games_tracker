@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Games;
     use App\Jobs\Games\UpdateGameDetailsList;
     use App\Jobs\Games\UpdateGameList;
     use App\Jobs\Games\UpdateGenresList;
-    use app\Services\GamesApiService;
+    use App\Services\GamesApiService;
 
     class CacheGameController
 {

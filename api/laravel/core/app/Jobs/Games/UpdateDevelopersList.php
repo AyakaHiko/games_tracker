@@ -2,7 +2,7 @@
 
 namespace App\Jobs\Games;
 
-use app\Services\Interfaces\IGameUpdateService;
+use App\Services\Interfaces\IGameUpdateService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;

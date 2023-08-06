@@ -1,7 +1,7 @@
 import {
   mdiAccount,
   mdiThemeLightDark,
-  mdiListBox,
+  mdiListBox, mdiLogout,
 } from "@mdi/js";
 
 export default [
@@ -16,6 +16,14 @@ export default [
       {
         icon: mdiListBox,
         label: "My Lists",
+      },
+      {
+        isDivider: true,
+      },
+      {
+        icon: mdiLogout,
+        label: "Log Out",
+        isLogout: true,
       },
     ],
   },

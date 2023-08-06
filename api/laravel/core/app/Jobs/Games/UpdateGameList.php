@@ -2,8 +2,8 @@
 
 namespace App\Jobs\Games;
 
-use app\Services\GamesService;
-use app\Services\Interfaces\IGameUpdateService;
+use App\Services\GamesService;
+use App\Services\Interfaces\IGameUpdateService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

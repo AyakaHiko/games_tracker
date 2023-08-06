@@ -77,14 +77,6 @@ const asideLgCloseClick = (event) => {
       >
         <AsideMenuList :menu="menu" @menu-click="menuClick" />
       </div>
-
-      <ul>
-        <AsideMenuItem
-          v-if="mainStore.isLogin"
-          :item="logoutItem"
-          @menu-click="logout"
-        />
-      </ul>
     </div>
   </aside>
 </template>

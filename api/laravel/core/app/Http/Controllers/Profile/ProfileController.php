@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Requests\RequestAvatarUpdate;
-use app\Services\Interfaces\IImageService;
+use App\Services\Interfaces\IImageService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -15,6 +15,7 @@ class ProfileController
 
     public function updateAvatar(RequestAvatarUpdate $request)
     {
+        Log::debug('upd');
         $user = Auth::user();
         if ($user==null)
         {

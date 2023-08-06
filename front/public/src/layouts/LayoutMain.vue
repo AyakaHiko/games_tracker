@@ -36,11 +36,7 @@ const menuClick = (event, item) => {
 </script>
 
 <template>
-  <div v-if="mainStore.isLoading">
-    <Loader />
-  </div>
   <div
-    v-else
     :class="{
       dark: styleStore.darkMode,
       'overflow-hidden lg:overflow-visible': isAsideMobileExpanded,

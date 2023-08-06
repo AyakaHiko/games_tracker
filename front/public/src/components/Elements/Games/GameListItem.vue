@@ -24,7 +24,7 @@ defineProps({
           alt="{{item.slug}}"
         />
       </div>
-      <div>
+      <div class="full-width">
         <h4>{{ item.name }}</h4>
         <hr>
         <p class="font-bold">Genres:</p>

@@ -21,7 +21,8 @@ export const useProfileStore = defineStore("profile", {
         body: formData,
       })
         .then((response) => {
-          useMainStore().user.avatar = response.avatarPath;
+          if (response !== undefined)
+            useMainStore().user.avatar = response.avatarPath;
         })
         .finally(() => {
           this.isLoading = false;
