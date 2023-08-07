@@ -24,7 +24,7 @@ defineProps({
           alt="{{item.slug}}"
         />
       </div>
-      <div class="full-width">
+      <div class="game-description">
         <h4>{{ item.name }}</h4>
         <hr>
         <p class="font-bold">Genres:</p>
@@ -61,4 +61,8 @@ defineProps({
   </li>
 </template>
 
-<style scoped></style>
+<style scoped>
+.game-description{
+  width: 100%;
+}
+</style>

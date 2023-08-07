@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Games;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\GameListRequest;
-use App\Services\GameListService;
+use app\Http\Requests\GameListApi\GameListRequest;
 use App\Services\Interfaces\IGameListService;
-use Illuminate\Http\Request;
 
 class GameListController extends Controller
 {

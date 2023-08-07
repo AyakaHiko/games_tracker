@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\AuthorizationRequest;
 use App\Http\Requests\RegistrationRequest;
+use App\Models\GameList;
 use App\Models\User;
 use App\Services\Interfaces\IAuthorizationService;
 use Illuminate\Http\JsonResponse;
@@ -58,6 +59,13 @@ class AuthorizationService implements IAuthorizationService
         ],201);
     }
 
+    private function createGameLists($userId, $listName): void
+    {
+        GameList::create([
+            'name' => $listName,
+            'user_id' => $userId,
+        ]);
+    }
     public function registration(RegistrationRequest $request): JsonResponse
     {
         $validatedData = $request->validated();
@@ -67,6 +75,12 @@ class AuthorizationService implements IAuthorizationService
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
         ]);
+
+
+
+
+        $this->createGameLists($user->id, 'Wishlist');
+        $this->createGameLists($user->id, 'Completed');
 
         return response()->json([
             'message' => 'User created successfully',

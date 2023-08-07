@@ -2,8 +2,14 @@
 
 namespace App\Services;
 
-use App\Http\Requests\GameListRequest;
+use App\Http\Requests\GameListApi\CreateGameListRequest;
+use App\Http\Requests\GameListApi\GameListRequest;
+use App\Http\Requests\GameListApi\RemoveGameListRequest;
+use App\Models\Game;
+use App\Models\GameList;
 use App\Services\Interfaces\IGameListService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 
 class GameListService implements IGameListService
 {
@@ -12,20 +18,62 @@ class GameListService implements IGameListService
             $validatedData = $request->validated();
             $gameId = $validatedData['game_id'];
             $listId = $validatedData['list_id'];
+
+            try {
+                $gameList = GameList::findOrFail($listId);
+                $game = Game::findOrFail($gameId);
+
+                $gameList->games()->attach($game);
+
+                return response()->json(['message' => 'Game added to the list successfully']);
+            } catch (ModelNotFoundException $e) {
+                return response()->json(['message' => 'Game or list not found'], 404);
+            }
         }
 
     public function removeGameFromList(GameListRequest $request)
     {
-        // TODO: Implement removeGameFromList() method.
+        $validatedData = $request->validated();
+        $gameId = $validatedData['game_id'];
+        $listId = $validatedData['list_id'];
+
+        try {
+            $gameList = GameList::findOrFail($listId);
+            $game = Game::findOrFail($gameId);
+
+            $gameList->games()->detach($game);
+
+            return response()->json(['message' => 'Game removed from the list successfully']);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Game or list not found'], 404);
+        }    }
+
+    public function deleteList(RemoveGameListRequest $request)
+    {
+        $validatedData = $request->validated();
+        $listId = $validatedData['list_id'];
+
+        try {
+            $gameList = GameList::findOrFail($listId);
+            $gameList->delete();
+
+            return response()->json(['message' => 'List deleted successfully']);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'List not found'], 404);
+        }
     }
 
-    public function deleteList(GameListRequest $request)
+    public function createList(CreateGameListRequest $request)
     {
-        // TODO: Implement deleteList() method.
-    }
+        $validatedData = $request->validated();
 
-    public function createList(GameListRequest $request)
-    {
-        // TODO: Implement createList() method.
+        $user = Auth::user();
+
+        GameList::create([
+            'name' => $validatedData['list_name'],
+            'user_id' => $user->id,
+        ]);
+
+        return response()->json(['message' => 'List created successfully']);
     }
 }
