@@ -10,6 +10,7 @@ use App\Models\GameList;
 use App\Services\Interfaces\IGameListService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class GameListService implements IGameListService
 {
@@ -65,15 +66,28 @@ class GameListService implements IGameListService
 
     public function createList(CreateGameListRequest $request)
     {
-        $validatedData = $request->validated();
+        try {
+            DB::beginTransaction();
 
-        $user = Auth::user();
+            $validatedData = $request->validated();
+            $user = Auth::user();
 
-        GameList::create([
-            'name' => $validatedData['list_name'],
-            'user_id' => $user->id,
-        ]);
+            GameList::create([
+                'name' => $validatedData['list_name'],
+                'user_id' => $user->id,
+            ]);
 
-        return response()->json(['message' => 'List created successfully']);
+            DB::commit();
+
+            return response()->json(['message' => 'List created successfully']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'message' => 'Error occurred. List creation failed.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
+
 }

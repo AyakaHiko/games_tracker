@@ -35,9 +35,6 @@ const profileForm = reactive({
 //   password_confirmation: "",
 // });
 
-const submitProfile = () => {
-  mainStore.updateUser(profileForm);
-};
 const selectedFile = ref(null);
 const profileStore = useProfileStore();
 const updateAvatar = () => {

@@ -1,13 +1,11 @@
 import { defineStore } from "pinia";
 import fetchService from "@/services/fetchService";
 
-export const useGamesStore = defineStore("games", {
+export const useGamesStore = defineStore("gameList", {
   state: () => ({
-    games: [],
-    cachedData: {},
     isLoading: false,
     pageSize: 10,
-    search:""
+    search: "",
   }),
   actions: {
     error(message) {
@@ -17,10 +15,6 @@ export const useGamesStore = defineStore("games", {
 
     async getData(page = 1) {
       this.isLoading = true;
-      if (this.cachedData[page]) {
-        this.games = this.cachedData[page];
-        return;
-      }
       return await fetchService("/api/games/", {
         method: "GET",
         headers: {
@@ -34,7 +28,6 @@ export const useGamesStore = defineStore("games", {
       })
         .then((response) => {
           this.games = response.result.data;
-          this.cachedData[page] = response.result.data;
           return response;
         })
         .catch((error) => {

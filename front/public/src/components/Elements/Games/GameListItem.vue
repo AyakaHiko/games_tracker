@@ -12,6 +12,10 @@ defineProps({
     required: true,
   },
 });
+
+const addToList = () => {
+
+};
 </script>
 
 <template>
@@ -26,14 +30,14 @@ defineProps({
       </div>
       <div class="game-description">
         <h4>{{ item.name }}</h4>
-        <hr>
+        <hr />
         <p class="font-bold">Genres:</p>
         <ul v-for="genre in item.genres" :key="genre" class="list-group">
           <li class="list-group-item">
             {{ genre.name }}
           </li>
         </ul>
-        <hr>
+        <hr />
 
         <p class="font-bold">
           Metacritic: <b>{{ item.metacritic }}</b>
@@ -42,7 +46,7 @@ defineProps({
           :outline="true"
           :icon-size="18"
           :icon="mdiPlaylistPlus"
-          href="#"
+          @click="addToList"
         />
         <BaseButton
           :outline="true"
@@ -62,7 +66,7 @@ defineProps({
 </template>
 
 <style scoped>
-.game-description{
+.game-description {
   width: 100%;
 }
 </style>

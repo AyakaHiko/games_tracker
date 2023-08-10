@@ -15,7 +15,6 @@ class ProfileController
 
     public function updateAvatar(RequestAvatarUpdate $request)
     {
-        Log::debug('upd');
         $user = Auth::user();
         if ($user==null)
         {

@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('lists', function (Blueprint $table) {
-            $table->boolean('is_delitable')->default(true);
+            $table->unsignedBigInteger('list_type_id')->nullable();
+            $table->foreign('list_type_id')->references('id')->on('list_types');
         });
     }
 
@@ -21,8 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('list', function (Blueprint $table) {
-            $table->dropColumn('is_delitable');
+        Schema::table('lists', function (Blueprint $table) {
+            $table->dropForeign(['list_type_id']);
+            $table->dropColumn('list_type_id');
         });
     }
 };

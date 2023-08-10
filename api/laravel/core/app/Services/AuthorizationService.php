@@ -5,16 +5,19 @@ namespace App\Services;
 use App\Http\Requests\AuthorizationRequest;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\GameList;
+use App\Models\ListType;
 use App\Models\User;
 use App\Services\Interfaces\IAuthorizationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class AuthorizationService implements IAuthorizationService
 {
-
+    protected $cacheMinutes = 10;
     public function getUser(): JsonResponse
     {
         Log::debug('getUser');
@@ -59,32 +62,55 @@ class AuthorizationService implements IAuthorizationService
         ],201);
     }
 
-    private function createGameLists($userId, $listName): void
+    private function createGameLists($userId, $listName, $listTypeId): void
     {
         GameList::create([
             'name' => $listName,
             'user_id' => $userId,
+            'list_type_id'=>$listTypeId,
+            'is_delitable' =>false
         ]);
+    }
+    private function addDefaultLists($userId)
+    {
+        $listTypeNames = ['wishlist', 'completed', 'uncompleted'];
+
+        foreach ($listTypeNames as $listTypeName) {
+            $listTypeId = Cache::remember($listTypeName . '_id', $this->cacheMinutes, function () use ($listTypeName) {
+                return ListType::where('name', $listTypeName)->value('id');
+            });
+
+            $this->createGameLists($userId, ucfirst($listTypeName), $listTypeId);
+        }
     }
     public function registration(RegistrationRequest $request): JsonResponse
     {
-        $validatedData = $request->validated();
+        try {
+            DB::beginTransaction();
 
-        $user = User::create([
-            'login' => $validatedData['login'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
-        ]);
+            $validatedData = $request->validated();
 
+            $user = User::create([
+                'login' => $validatedData['login'],
+                'email' => $validatedData['email'],
+                'password' => Hash::make($validatedData['password']),
+            ]);
+            $this->addDefaultLists($user->id);
 
+            DB::commit();
 
+            return response()->json([
+                'message' => 'User created successfully',
+                'user' => $user
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
 
-        $this->createGameLists($user->id, 'Wishlist');
-        $this->createGameLists($user->id, 'Completed');
-
-        return response()->json([
-            'message' => 'User created successfully',
-            'user' => $user
-        ]);
+            return response()->json([
+                'message' => 'Error occurred. User registration failed.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
+
 }

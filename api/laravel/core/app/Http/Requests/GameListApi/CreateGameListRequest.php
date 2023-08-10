@@ -15,6 +15,7 @@ class CreateGameListRequest extends FormRequest
     {
         return [
             'list_name' => 'required|string|max:255',
+            'list_type_id' => 'required|integer|min:1',
         ];
     }
 }
