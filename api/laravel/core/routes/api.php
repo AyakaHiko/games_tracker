@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Games\CacheGameController;
+use App\Http\Controllers\Games\GameListController;
 use App\Http\Controllers\Games\GamesController;
 use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Http\Request;
@@ -44,4 +45,12 @@ Route::prefix('/update')->group(function () {
 
     // Путь для обновления деталей игры по ID
     Route::get('/game/{id}', [CacheGameController::class, 'UpdateGameDetails']);
+});
+
+Route::prefix('game-list')->group(function () {
+    Route::get('/lists', [GameListController::class, 'getGameList']);
+    Route::post('/add', [GameListController::class, 'addGameToList']);
+    Route::post('/remove', [GameListController::class, 'removeGameFromList']);
+    Route::post('/delete', [GameListController::class, 'deleteList']);
+    Route::post('/create', [GameListController::class, 'createList']);
 });

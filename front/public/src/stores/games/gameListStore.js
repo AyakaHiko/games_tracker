@@ -4,8 +4,6 @@ import fetchService from "@/services/fetchService";
 export const useGamesStore = defineStore("gameList", {
   state: () => ({
     isLoading: false,
-    pageSize: 10,
-    search: "",
   }),
   actions: {
     error(message) {
@@ -13,7 +11,7 @@ export const useGamesStore = defineStore("gameList", {
       this.error = message;
     },
 
-    async getData(page = 1) {
+    async addGameToList(gameId, listId) {
       this.isLoading = true;
       return await fetchService("/api/games/", {
         method: "GET",
@@ -21,13 +19,11 @@ export const useGamesStore = defineStore("gameList", {
           "Content-Type": "application/json",
         },
         params: {
-          page_size: this.pageSize,
-          page: page,
-          search: this.search,
+          game_id: gameId,
+          list_id: listId,
         },
       })
         .then((response) => {
-          this.games = response.result.data;
           return response;
         })
         .catch((error) => {

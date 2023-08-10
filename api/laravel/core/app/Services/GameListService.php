@@ -5,8 +5,10 @@ namespace App\Services;
 use App\Http\Requests\GameListApi\CreateGameListRequest;
 use App\Http\Requests\GameListApi\GameListRequest;
 use App\Http\Requests\GameListApi\RemoveGameListRequest;
+use App\Http\Requests\GetGameListRequest;
 use App\Models\Game;
 use App\Models\GameList;
+use App\Models\ListType;
 use App\Services\Interfaces\IGameListService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
@@ -14,23 +16,50 @@ use Illuminate\Support\Facades\DB;
 
 class GameListService implements IGameListService
 {
-        public function addGameToList(GameListRequest $request)
-        {
+    public function getGameList(GetGameListRequest $request)
+    {
+        try {
             $validatedData = $request->validated();
-            $gameId = $validatedData['game_id'];
-            $listId = $validatedData['list_id'];
+            $userId = $validatedData['user_id'];
 
-            try {
-                $gameList = GameList::findOrFail($listId);
-                $game = Game::findOrFail($gameId);
+            $gameListQuery = GameList::where('user_id', $userId);
 
-                $gameList->games()->attach($game);
+            if (isset($validatedData['list_type'])) {
+                $listType = ListType::where('name', $validatedData['list_type'])->first();
 
-                return response()->json(['message' => 'Game added to the list successfully']);
-            } catch (ModelNotFoundException $e) {
-                return response()->json(['message' => 'Game or list not found'], 404);
+                if ($listType) {
+                    $gameListQuery->where('list_type_id', $listType->id);
+                }
             }
+
+            if (isset($validatedData['list_name'])) {
+                $gameListQuery->where('list_name', 'like', '%' . $validatedData['list_name'] . '%');
+            }
+
+            $gameList = $gameListQuery->get();
+
+            return response()->json(['gamelist' => $gameList], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
         }
+    }
+    public function addGameToList(GameListRequest $request)
+    {
+        $validatedData = $request->validated();
+        $gameId = $validatedData['game_id'];
+        $listId = $validatedData['list_id'];
+
+        try {
+            $gameList = GameList::findOrFail($listId);
+            $game = Game::findOrFail($gameId);
+
+            $gameList->games()->attach($game);
+
+            return response()->json(['message' => 'Game added to the list successfully']);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Game or list not found'], 404);
+        }
+    }
 
     public function removeGameFromList(GameListRequest $request)
     {
@@ -47,7 +76,8 @@ class GameListService implements IGameListService
             return response()->json(['message' => 'Game removed from the list successfully']);
         } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'Game or list not found'], 404);
-        }    }
+        }
+    }
 
     public function deleteList(RemoveGameListRequest $request)
     {
