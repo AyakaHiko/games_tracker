@@ -19,6 +19,7 @@ export const useGamesStore = defineStore("games", {
       this.isLoading = true;
       if (this.cachedData[page]) {
         this.games = this.cachedData[page];
+        this.isLoading = false;
         return;
       }
       return await fetchService("/api/games/", {
