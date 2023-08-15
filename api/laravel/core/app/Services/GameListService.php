@@ -16,33 +16,68 @@ use Illuminate\Support\Facades\DB;
 
 class GameListService implements IGameListService
 {
+    private function getFilteredGameList($user_id, $list_type = null, $list_name = null)
+    {
+        $gameListQuery = GameList::where('user_id', $user_id);
+
+        if ($list_type) {
+            $listType = ListType::where('name', $list_type)->first();
+
+            if ($listType) {
+                $gameListQuery->where('list_type_id', $listType->id);
+            }
+        }
+
+        if ($list_name) {
+            $gameListQuery->where('list_name', 'like', '%' . $list_name . '%');
+        }
+
+        return $gameListQuery
+            ->with(['listType' => function ($query) {
+                $query->select('id', 'name');
+            }])->get();
+    }
+
     public function getGameList(GetGameListRequest $request)
     {
         try {
             $validatedData = $request->validated();
             $userId = $validatedData['user_id'];
 
-            $gameListQuery = GameList::where('user_id', $userId);
-
-            if (isset($validatedData['list_type'])) {
-                $listType = ListType::where('name', $validatedData['list_type'])->first();
-
-                if ($listType) {
-                    $gameListQuery->where('list_type_id', $listType->id);
-                }
-            }
-
-            if (isset($validatedData['list_name'])) {
-                $gameListQuery->where('list_name', 'like', '%' . $validatedData['list_name'] . '%');
-            }
-
-            $gameList = $gameListQuery->get();
-
+            $gameList = $this->getFilteredGameList(
+                $userId,
+                $validatedData['list_type'] ?? null,
+                $validatedData['list_name'] ?? null
+            );
             return response()->json(['gamelist' => $gameList], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+
+    public function getGameListDetails(GetGameListRequest $request)
+    {
+        try {
+            $validatedData = $request->validated();
+            $userId = $validatedData['user_id'];
+
+            $gameListQuery = $this->getFilteredGameList(
+                $userId,
+                $validatedData['list_type'] ?? null,
+                $validatedData['list_name'] ?? null
+            );
+
+
+            $gameListQuery->load(['games:id,name,background_image']);
+
+
+            return response()->json(['gamelist' => $gameListQuery], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
+
     public function addGameToList(GameListRequest $request)
     {
         $validatedData = $request->validated();

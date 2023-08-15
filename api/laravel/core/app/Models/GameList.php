@@ -23,7 +23,7 @@ class GameList extends Model
 
     public function listType()
     {
-        return $this->belongsTo(ListType::class);
+        return $this->belongsTo(ListType::class, 'list_type_id');
     }
     public function games()
     {

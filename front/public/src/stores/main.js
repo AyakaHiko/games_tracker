@@ -6,9 +6,13 @@ export const useMainStore = defineStore("main", {
     /**/
     isLoading: false,
     user: {
+      id: "",
       login: "",
       avatar: "",
       email: "",
+      wishlistId: null,
+      completedListId: null,
+      uncompletedListId: null,
     },
     isLogin: false,
     /* Field focus with ctrl+k (to register only once) */
@@ -24,16 +28,45 @@ export const useMainStore = defineStore("main", {
       });
       this.isLogin = false;
     },
-    setUser(user) {
-      this.user = {
-        login: user.login,
-        avatar: user.avatar,
-        email: user.email,
-      };
+    async getUserLists() {
+      await fetchService("/api/game-list/lists", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: {
+          user_id: this.user.id,
+        },
+      })
+        .then((response) => {
+          response.gamelist.forEach((list) => {
+            switch (list.list_type?.name) {
+              case "Wishlist":
+                this.user.wishlistId = list.id;
+                break;
+              case "Completed":
+                this.user.completedListId = list.id;
+                break;
+              case "Uncompleted":
+                this.user.uncompletedListId = list.id;
+                break;
+            }
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    async setUser(user) {
+      this.user.id = user.id;
+      this.user.login = user.login;
+      this.user.avatar = user.avatar;
+      this.user.email = user.email;
+
+      await this.getUserLists();
       this.isLogin = true;
     },
     getUser() {
-      console.log("start getting user");
       this.isLoading = true;
       try {
         fetchService("/api/getUser/", {

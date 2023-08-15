@@ -49,6 +49,7 @@ Route::prefix('/update')->group(function () {
 
 Route::prefix('game-list')->group(function () {
     Route::get('/lists', [GameListController::class, 'getGameList']);
+    Route::get('/lists-details', [GameListController::class, 'getGameListDetails']);
     Route::post('/add', [GameListController::class, 'addGameToList']);
     Route::post('/remove', [GameListController::class, 'removeGameFromList']);
     Route::post('/delete', [GameListController::class, 'deleteList']);

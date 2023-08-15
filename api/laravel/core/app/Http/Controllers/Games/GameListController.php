@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Games;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GameListApi\CreateGameListRequest;
-use app\Http\Requests\GameListApi\GameListRequest;
+use App\Http\Requests\GameListApi\GameListRequest;
 use App\Http\Requests\GameListApi\RemoveGameListRequest;
 use App\Http\Requests\GetGameListRequest;
 use App\Services\Interfaces\IGameListService;
@@ -18,6 +18,10 @@ class GameListController extends Controller
     public function getGameList(GetGameListRequest $request)
     {
         return $this->gameListService->getGameList($request);
+    }
+    public function getGameListDetails(GetGameListRequest $request)
+    {
+        return $this->gameListService->getGameListDetails($request);
     }
 
     public function addGameToList(GameListRequest $request)

@@ -14,5 +14,6 @@ interface IGameListService
     public function deleteList(RemoveGameListRequest $request);
     public function createList(CreateGameListRequest $request);
     public function getGameList(GetGameListRequest $request);
+    public function getGameListDetails(GetGameListRequest $request);
 
 }

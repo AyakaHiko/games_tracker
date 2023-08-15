@@ -20,9 +20,9 @@ class AuthorizationService implements IAuthorizationService
     protected $cacheMinutes = 10;
     public function getUser(): JsonResponse
     {
-        Log::debug('getUser');
         if (Auth::check()) {
             $user = Auth::user();
+            $user->load('gameLists');
             return response()->json([
                 'user' => $user,
             ]);

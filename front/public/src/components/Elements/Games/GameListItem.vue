@@ -5,16 +5,42 @@ import {
   mdiPlaylistPlus,
 } from "@mdi/js/commonjs/mdi";
 import BaseButton from "@/components/Elements/BaseButton.vue";
+import { useGameListsStore } from "@/stores/games/gameListStore";
+import { toast } from "vue3-toastify";
+import { useMainStore } from "@/stores/main";
 
-defineProps({
+const props = defineProps({
   item: {
     type: Object,
     required: true,
   },
 });
 
-const addToList = () => {
+const gameListsStore = useGameListsStore();
+const addToList = (listType) => {
+  const user = useMainStore().user;
+  let list;
+  switch (listType) {
+    case "wishlist":
+      list = user.wishlistId;
+      break;
+    case "completed":
+      list = user.completedListId;
+      break;
+    case "uncompleted":
+      list = user.uncompletedListId;
+      break;
+    default:
+      toast.error("Something wrong");
+      return;
+  }
 
+  gameListsStore.addGameToList(props.item.id, list).then((response) => {
+    if (gameListsStore.isError) {
+      toast.error(gameListsStore.error);
+      gameListsStore.isError = false;
+    } else toast.success(response.message);
+  });
 };
 </script>
 
@@ -42,24 +68,26 @@ const addToList = () => {
         <p class="font-bold">
           Metacritic: <b>{{ item.metacritic }}</b>
         </p>
-        <BaseButton
-          :outline="true"
-          :icon-size="18"
-          :icon="mdiPlaylistPlus"
-          @click="addToList"
-        />
-        <BaseButton
-          :outline="true"
-          :icon-size="18"
-          :icon="mdiHeartPlusOutline"
-          href="#"
-        />
-        <BaseButton
-          :outline="true"
-          :icon-size="18"
-          :icon="mdiCheckCircleOutline"
-          href="#"
-        />
+        <div v-if="useMainStore().isLogin">
+          <BaseButton
+            :outline="true"
+            :icon-size="18"
+            :icon="mdiHeartPlusOutline"
+            @click="addToList('wishlist')"
+          />
+          <BaseButton
+            :outline="true"
+            :icon-size="18"
+            :icon="mdiCheckCircleOutline"
+            @click="addToList('completed')"
+          />
+          <BaseButton
+            :outline="true"
+            :icon-size="18"
+            :icon="mdiPlaylistPlus"
+            @click="addToList('uncompleted')"
+          />
+        </div>
       </div>
     </div>
   </li>

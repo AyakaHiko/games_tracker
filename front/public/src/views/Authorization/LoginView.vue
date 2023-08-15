@@ -26,9 +26,8 @@ const submit = async () => {
   authorizationStorage.doLogin(form).then(() => {
     if (authorizationStorage.isError) {
       toast.error(authorizationStorage.error);
-      return;
-    }
-    if (authorizationStorage.isLogin) {
+      authorizationStorage.isError = false;
+    } else if (authorizationStorage.isLogin) {
       router.push("/profile");
     }
   });
