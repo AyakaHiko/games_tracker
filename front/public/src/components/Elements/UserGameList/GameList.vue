@@ -1,5 +1,5 @@
 <script setup>
-import UserGameListItem from "@/components/Elements/Profile/UserGameListItem.vue";
+import UserGameListItem from "@/components/Elements/UserGameList/GameListItem.vue";
 
 const props = defineProps({
   lists: {

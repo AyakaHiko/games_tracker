@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GameListApi\CreateGameListRequest;
 use App\Http\Requests\GameListApi\GameListRequest;
 use App\Http\Requests\GameListApi\RemoveGameListRequest;
-use App\Http\Requests\GetGameListRequest;
+use App\Http\Requests\GetGameListsRequest;
 use App\Services\Interfaces\IGameListService;
 use Illuminate\Http\JsonResponse;
 
@@ -15,13 +15,21 @@ class GameListController extends Controller
     public function __construct(protected IGameListService $gameListService)
     {
     }
-    public function getGameList(GetGameListRequest $request)
+    public function getGameLists(GetGameListsRequest $request)
     {
-        return $this->gameListService->getGameList($request);
+        return $this->gameListService->getGameLists($request);
     }
-    public function getGameListDetails(GetGameListRequest $request)
+    public function getGameListsDetails(GetGameListsRequest $request)
     {
-        return $this->gameListService->getGameListDetails($request);
+        return $this->gameListService->getGameListsDetails($request);
+    }
+    public function getGameList(int $id)
+    {
+        return $this->gameListService->getGameList($id);
+    }
+    public function getGameListDetails(int $id)
+    {
+        return $this->gameListService->getGameListDetails($id);
     }
 
     public function addGameToList(GameListRequest $request)

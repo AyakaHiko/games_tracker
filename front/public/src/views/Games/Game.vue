@@ -1,16 +1,16 @@
 <script setup>
-
 const props = defineProps({
-  item: {
-    type: Object,
+  gameId: {
+    type: String,
     required: true,
   },
 });
 </script>
 
 <template>
-  <h1>{{item.name}}</h1>
-
+<div>
+  <h1>{{props.gameId}}</h1>
+</div>
 </template>
 
 <style scoped></style>

@@ -19,7 +19,7 @@ export const useGameListsStore = defineStore("gameList", {
         ...params,
         user_id: userId,
       };
-      return await fetchService("/api/game-list/lists", {
+      return await fetchService("/api/game-list/lists-details", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

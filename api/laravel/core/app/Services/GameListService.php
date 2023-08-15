@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Http\Requests\GameListApi\CreateGameListRequest;
 use App\Http\Requests\GameListApi\GameListRequest;
 use App\Http\Requests\GameListApi\RemoveGameListRequest;
-use App\Http\Requests\GetGameListRequest;
+use App\Http\Requests\GetGameListsRequest;
 use App\Models\Game;
 use App\Models\GameList;
 use App\Models\ListType;
@@ -38,7 +38,7 @@ class GameListService implements IGameListService
             }])->get();
     }
 
-    public function getGameList(GetGameListRequest $request)
+    public function getGameLists(GetGameListsRequest $request)
     {
         try {
             $validatedData = $request->validated();
@@ -55,7 +55,7 @@ class GameListService implements IGameListService
         }
     }
 
-    public function getGameListDetails(GetGameListRequest $request)
+    public function getGameListsDetails(GetGameListsRequest $request)
     {
         try {
             $validatedData = $request->validated();
@@ -155,4 +155,22 @@ class GameListService implements IGameListService
         }
     }
 
+    public function getGameList(int $id)
+    {
+        try {
+            $gameList = GameList::findOrFail($id);
+            return response()->json(['gamelist' => $gameList], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }    }
+
+    public function getGameListDetails(int $id)
+    {
+        try {
+            $gameList = GameList::findOrFail($id);
+            $gameList->load(['games:id,name,background_image']);
+            return response()->json(['gamelist' => $gameList], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }    }
 }

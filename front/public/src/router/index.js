@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory} from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/HomeView.vue";
 
 const routes = [
@@ -25,7 +25,7 @@ const routes = [
     },
     path: "/profile",
     name: "profile",
-    component: () => import("@/views/ProfileView.vue"),
+    component: () => import("@/views/Profile/ProfileView.vue"),
   },
   {
     meta: {
@@ -69,6 +69,15 @@ const routes = [
     name: "gamelists",
     props: true,
     component: () => import("@/views/Profile/GameLists.vue"),
+  },
+  {
+    meta: (route) => ({
+      title: route.params.gameName,
+    }),
+    path: "/game/:gameId",
+    name: "game",
+    props: true,
+    component: () => import("@/views/Games/Game.vue"),
   },
 ];
 
