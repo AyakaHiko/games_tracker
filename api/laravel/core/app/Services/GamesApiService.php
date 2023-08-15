@@ -58,6 +58,8 @@ class GamesApiService implements IGamesApiService
             {
                 $game = (new GamesUpdateService)->updateGameDetailsDatabase($id);
             }
+            else
+                $game->load('game');
             return response()->json($game);
         } catch (ValidationException $e) {
             return response()->json(['error' => $e->errors()], 422);

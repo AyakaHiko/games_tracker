@@ -18,7 +18,10 @@ class Game extends Model
         'metacritic',
         'popularity',
     ];
-
+    public function details()
+    {
+        return $this->belongsTo(GameDetails::class, 'id');
+    }
     public function genres()
     {
         return $this->belongsToMany(Genre::class,'genres_games', 'game_id', 'genre_id');

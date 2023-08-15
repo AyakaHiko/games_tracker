@@ -16,8 +16,12 @@ class GameDetails extends Model
         'background_image_additional',
         'website' ,
     ];
-    public function developers()
+    public function game()
     {
-        return $this->belongsToMany(Developer::class,'developers_game_details', 'game_details_id', 'developer_id');
+        return $this->belongsTo(Game::class, 'id');
     }
+//    public function developers()
+//    {
+//        return $this->belongsToMany(Developer::class,'developers_game_details', 'game_details_id', 'developer_id');
+//    }
 }

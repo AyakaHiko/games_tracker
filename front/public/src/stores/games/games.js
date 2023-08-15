@@ -14,7 +14,9 @@ export const useGamesStore = defineStore("games", {
       this.isError = true;
       this.error = message;
     },
-
+    async getGame(id){
+      return
+    },
     async getData(page = 1) {
       this.isLoading = true;
       if (this.cachedData[page]) {

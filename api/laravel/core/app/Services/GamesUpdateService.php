@@ -118,6 +118,7 @@ class GamesUpdateService implements IGameUpdateService
                 'background_image_additional' => $data['background_image_additional'],
                 'website' => $data['website'],
             ]);
+            $newDetails->game()->associate(Game::find($id));
             $newDetails->save();
             return $newDetails;
         } catch (ValidationException|RequestException $e) {
