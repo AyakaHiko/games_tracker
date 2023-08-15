@@ -1,8 +1,4 @@
-import {
-  mdiAccount,
-  mdiThemeLightDark,
-  mdiListBox, mdiLogout,
-} from "@mdi/js";
+import { mdiAccount, mdiThemeLightDark, mdiListBox, mdiLogout } from "@mdi/js";
 
 export default [
   {
@@ -13,10 +9,11 @@ export default [
         label: "My Profile",
         to: "/profile",
       },
-      {
-        icon: mdiListBox,
-        label: "My Lists",
-      },
+      // {
+      //   icon: mdiListBox,
+      //   label: "My Lists",
+      //   to: "/game-lists:userId",
+      // },
       {
         isDivider: true,
       },

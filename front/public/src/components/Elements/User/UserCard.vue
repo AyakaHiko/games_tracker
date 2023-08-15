@@ -11,8 +11,7 @@ import PillTag from "@/components/Elements/PillTag/PillTag.vue";
 const mainStore = useMainStore();
 
 const userName = computed(() => mainStore.user.login);
-
-// const userSwitchVal = ref(false);
+const verified = computed(() => mainStore.user.verified);
 </script>
 
 <template>
@@ -21,28 +20,33 @@ const userName = computed(() => mainStore.user.login);
       <UserAvatarCurrentUser class="lg:mx-12 avatar" />
       <div class="space-y-3 text-center md:text-left lg:mx-12">
         <div class="flex justify-center md:block">
-<!--          <FormCheckRadio-->
-<!--            v-model="userSwitchVal"-->
-<!--            name="notifications-switch"-->
-<!--            type="switch"-->
-<!--            label="Notifications"-->
-<!--            :input-value="true"-->
-<!--          />-->
+          <!--          <FormCheckRadio-->
+          <!--            v-model="userSwitchVal"-->
+          <!--            name="notifications-switch"-->
+          <!--            type="switch"-->
+          <!--            label="Notifications"-->
+          <!--            :input-value="true"-->
+          <!--          />-->
         </div>
         <h1 class="text-2xl">
           Howdy, <b>{{ userName }}</b
           >!
         </h1>
-<!--        <p>Last login <b>12 mins ago</b> from <b>127.0.0.1</b></p>-->
+        <!--        <p>Last login <b>12 mins ago</b> from <b>127.0.0.1</b></p>-->
         <div class="flex justify-center md:block">
-          <PillTag  label="Verified" color="info" :icon="mdiCheckDecagram" />
+          <PillTag
+            v-if="verified"
+            label="Verified"
+            color="info"
+            :icon="mdiCheckDecagram"
+          />
         </div>
       </div>
     </BaseLevel>
   </CardBox>
 </template>
 <style>
-.avatar img{
+.avatar img {
   height: 100px;
   width: auto;
 }

@@ -10,6 +10,7 @@ export const useMainStore = defineStore("main", {
       login: "",
       avatar: "",
       email: "",
+      verified: null,
       wishlistId: null,
       completedListId: null,
       uncompletedListId: null,
@@ -62,7 +63,7 @@ export const useMainStore = defineStore("main", {
       this.user.login = user.login;
       this.user.avatar = user.avatar;
       this.user.email = user.email;
-
+      this.user.verified = user.verified;
       await this.getUserLists();
       this.isLogin = true;
     },

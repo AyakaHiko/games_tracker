@@ -60,6 +60,16 @@ const routes = [
     name: "games",
     component: () => import("@/views/Games/LibraryView.vue"),
   },
+
+  {
+    meta: {
+      title: "Game Lists",
+    },
+    path: "/game-lists/:userId",
+    name: "gamelists",
+    props: true,
+    component: () => import("@/views/Profile/GameLists.vue"),
+  },
 ];
 
 const router = createRouter({

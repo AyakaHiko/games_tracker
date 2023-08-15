@@ -1,33 +1,25 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { useMainStore } from "@/stores/main";
-import {
-  mdiAccount,
-  mdiMail,
-  mdiAsterisk,
-  mdiFormTextboxPassword,
-  mdiGithub,
-} from "@mdi/js";
+import { mdiListBox } from "@mdi/js";
 import SectionMain from "@/components/Elements/SectionMain.vue";
 import CardBox from "@/components/Elements/CardBox/CardBox.vue";
-import BaseDivider from "@/components/Elements/BaseDivider.vue";
 import FormField from "@/components/Elements/Form/FormField.vue";
-import FormControl from "@/components/Elements/Form/FormControl.vue";
 import FormFilePicker from "@/components/Elements/Form/FormFilePicker.vue";
 import BaseButton from "@/components/Elements/BaseButton.vue";
 import BaseButtons from "@/components/Elements/BaseButtons.vue";
 import UserCard from "@/components/Elements/User/UserCard.vue";
 import LayoutMain from "@/layouts/LayoutMain.vue";
-import SectionTitleLineWithButton from "@/components/Elements/SectionTitleLineWithButton.vue";
 import { useProfileStore } from "@/stores/profile/profileStorage";
 import Loader from "@/components/Elements/Loader.vue";
+import {useRouter} from "vue-router";
 
-const mainStore = useMainStore();
+// const mainStore = useMainStore();
 
-const profileForm = reactive({
-  login: mainStore.user.login,
-  email: mainStore.user.email,
-});
+// const profileForm = reactive({
+//   login: mainStore.user.login,
+//   email: mainStore.user.email,
+// });
 
 // const passwordForm = reactive({
 //   password_current: "",
@@ -41,6 +33,12 @@ const updateAvatar = () => {
   const formData = new FormData();
   formData.append("avatar", selectedFile.value);
   profileStore.updateAvatar(formData);
+};
+
+const router = useRouter();
+const goToMyLists = () => {
+  let userId = useMainStore().user.id;
+  router.push({ name: "gamelists", params: { userId } });
 };
 </script>
 
@@ -60,6 +58,19 @@ const updateAvatar = () => {
             </BaseButtons>
           </template>
         </CardBox>
+        <BaseButton :label="'My Lists'" :icon="mdiListBox" @click="goToMyLists">
+        </BaseButton>
+        <!--        <router-link-->
+        <!--          :to="{-->
+        <!--            name: 'gamelists',-->
+        <!--            // params: { userId: useMainStore().user.id },-->
+        <!--          }"-->
+
+        <!--        >-->
+        <!--          <BaseIcon path="{{mdiListBox}}"></BaseIcon>-->
+        <!--          <span>My Lists</span>-->
+        <!--        </router-link>-->
+
         <!--        <CardBox is-form @submit.prevent="submitProfile">-->
         <!--          <FormField label="Name" help="Required. Your name">-->
         <!--            <FormControl-->
