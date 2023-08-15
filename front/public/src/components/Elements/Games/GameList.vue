@@ -7,6 +7,7 @@ import { onMounted, ref } from "vue";
 import { toast } from "vue3-toastify";
 import Loader from "@/components/Elements/Loader.vue";
 import FormControl from "@/components/Elements/Form/FormControl.vue";
+import BaseButton from "@/components/Elements/BaseButton.vue";
 
 const gamesStore = useGamesStore();
 let page = ref(1);
@@ -30,19 +31,26 @@ const handleSearchEnter = (event) => {
   gamesStore.search = event.target.value;
   initGames();
 };
+const resetSearch = () => {
+  gamesStore.search = "";
+  initGames();
+};
 onMounted(() => {
   initGames();
 });
 </script>
 
 <template>
-  <FormControl
-    placeholder="Search (ctrl+k)"
-    ctrl-k-focus
-    transparent
-    @keyup.enter="handleSearchEnter"
-    @blur="handleSearchEnter"
-  />
+  <div>
+    <FormControl
+      placeholder="Search (ctrl+k)"
+      ctrl-k-focus
+      transparent
+      @keyup.enter="handleSearchEnter"
+      @blur="handleSearchEnter"
+    />
+    <BaseButton :label="'Reset'" @click="resetSearch" />
+  </div>
   <Loader v-if="gamesStore.isLoading" />
   <ul v-else class="ml-1 list-group-flush">
     <GameListItem

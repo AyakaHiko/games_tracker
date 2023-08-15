@@ -27,7 +27,6 @@ export const useGameListsStore = defineStore("gameList", {
         params: params,
       })
         .then((response) => {
-          console.log(response)
           this.lists = response.gamelist;
           return response;
         })

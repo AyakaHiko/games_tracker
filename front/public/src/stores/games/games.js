@@ -16,11 +16,11 @@ export const useGamesStore = defineStore("games", {
     },
     async getData(page = 1) {
       this.isLoading = true;
-      if (this.cachedData[page]) {
-        this.games = this.cachedData[page];
-        this.isLoading = false;
-        return;
-      }
+      // if (this.cachedData[page]) {
+      //   this.games = this.cachedData[page].data;
+      //   this.isLoading = false;
+      //   return this.games;
+      // }
       return await fetchService("/api/games/", {
         method: "GET",
         headers: {
@@ -34,7 +34,7 @@ export const useGamesStore = defineStore("games", {
       })
         .then((response) => {
           this.games = response.result.data;
-          this.cachedData[page] = response.result.data;
+          // this.cachedData[page] = response.result;
           return response;
         })
         .catch((error) => {

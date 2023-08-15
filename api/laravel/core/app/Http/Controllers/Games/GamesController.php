@@ -11,12 +11,9 @@ use Illuminate\Validation\ValidationException;
 
 class GamesController extends Controller
 {
-
-
     public function __construct(protected IGamesApiService $gamesService)
     {
     }
-
     public function index(GamePaginationRequest $request)
     {
         try {
