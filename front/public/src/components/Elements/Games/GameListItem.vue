@@ -45,7 +45,7 @@ const addToList = (listType) => {
 </script>
 
 <template>
-  <li>
+  <li class="list-group-item">
     <div class="flex align-top mb-1.5 border-gray-500 border-[1px] w-100">
       <div class="mr-0.5">
         <img
@@ -55,17 +55,24 @@ const addToList = (listType) => {
         />
       </div>
       <div class="game-description">
-        <h4>{{ item.name }}</h4>
-        <hr />
+        <h3 class="mb-3">
+          <router-link
+            :to="{
+              name: 'game',
+              params: { gameId: props.item.id },
+            }"
+          >
+            {{ props.item.name }}
+          </router-link>
+        </h3>
         <p class="font-bold">Genres:</p>
-        <ul v-for="genre in item.genres" :key="genre" class="list-group">
-          <li class="list-group-item">
+        <ul class="list-group mb-3">
+          <li v-for="genre in item.genres" :key="genre" class="list-group-item">
             {{ genre.name }}
           </li>
         </ul>
-        <hr />
 
-        <p class="font-bold">
+        <p class="font-bold mb-3">
           Metacritic: <b>{{ item.metacritic }}</b>
         </p>
         <div v-if="useMainStore().isLogin">

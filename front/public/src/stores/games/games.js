@@ -7,15 +7,12 @@ export const useGamesStore = defineStore("games", {
     cachedData: {},
     isLoading: false,
     pageSize: 10,
-    search:""
+    search: "",
   }),
   actions: {
     error(message) {
       this.isError = true;
       this.error = message;
-    },
-    async getGame(id){
-      return
     },
     async getData(page = 1) {
       this.isLoading = true;

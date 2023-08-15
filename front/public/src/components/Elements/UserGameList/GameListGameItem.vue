@@ -16,7 +16,6 @@ const props = defineProps({
         alt="{{props.item.name}}"
       />
       <span>
-        <!--        <a>{{ props.item.name }}</a>-->
         <router-link
           :to="{
             name: 'game',

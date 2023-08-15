@@ -44,7 +44,7 @@ onMounted(() => {
     @blur="handleSearchEnter"
   />
   <Loader v-if="gamesStore.isLoading" />
-  <ul v-else class="ml-1">
+  <ul v-else class="ml-1 list-group-flush">
     <GameListItem
       v-for="game in gamesStore.games"
       :key="game.id"

@@ -10,10 +10,8 @@ import NavBar from "@/components/Elements/NavBar/NavBar.vue";
 import NavBarItemPlain from "@/components/Elements/NavBar/NavBarItemPlain.vue";
 import AsideMenu from "@/components/Elements/AsideMenu/AsideMenu.vue";
 import FooterBar from "@/components/Elements/FooterBar.vue";
-import Loader from "@/components/Elements/Loader.vue";
 import { useMainStore } from "@/stores/main";
-
-const mainStore = useMainStore();
+useMainStore();
 const layoutAsidePadding = "xl:pl-60";
 
 const styleStore = useStyleStore();
