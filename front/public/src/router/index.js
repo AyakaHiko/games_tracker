@@ -71,9 +71,6 @@ const routes = [
     component: () => import("@/views/Profile/GameLists.vue"),
   },
   {
-    meta: (route) => ({
-      title: route.params.gameName,
-    }),
     path: "/game/:gameId",
     name: "game",
     props: true,

@@ -21,6 +21,7 @@ class ProfileController
             return response()->json(['error' => "Unauthorized", 401]);
         }
         if ($request->hasFile('avatar')) {
+            $this->imageService->deleteImage($user->avatar);
             $avatarFile = $request->file('avatar');
             $fileName = 'new_avatar_' . time() . '.' . $avatarFile->getClientOriginalExtension();
             $url = $this->imageService->uploadImage($avatarFile, $fileName, 'avatars');

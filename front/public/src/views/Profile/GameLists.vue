@@ -2,8 +2,9 @@
 import LayoutMain from "@/layouts/LayoutMain.vue";
 import UserGameList from "@/components/Elements/UserGameList/GameList.vue";
 import { useGameListsStore } from "@/stores/games/gameListStore";
-import { onMounted } from "vue";
+import { computed, onMounted } from "vue";
 import Loader from "@/components/Elements/Loader.vue";
+import { useMainStore } from "@/stores/main";
 
 const props = defineProps({
   userId: {
@@ -13,6 +14,7 @@ const props = defineProps({
 });
 
 const gameListStore = useGameListsStore();
+const isCurrentUser = useMainStore().user.id === props.userId;
 onMounted(() => {
   gameListStore.getLists(props.userId);
 });
@@ -21,7 +23,11 @@ onMounted(() => {
 <template>
   <LayoutMain>
     <Loader v-if="gameListStore.isLoading" />
-    <UserGameList v-else :lists="gameListStore.lists" />
+    <UserGameList
+      v-else
+      :isCurrentUser="isCurrentUser"
+      :lists="gameListStore.lists"
+    />
   </LayoutMain>
 </template>
 

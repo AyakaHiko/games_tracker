@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Http\Requests\GamesListsPivotRequest;
 use App\Models\GamesListsPivot;
 use App\Services\Interfaces\IGameListPivotService;
-use Illuminate\Support\Facades\Log;
 
 class GameListPivotService implements IGameListPivotService
 {

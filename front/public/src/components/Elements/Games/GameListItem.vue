@@ -17,29 +17,44 @@ const props = defineProps({
 });
 
 const gameListsStore = useGameListsStore();
-const addToList = (listType) => {
+
+const getListByType = (listType) => {
   const user = useMainStore().user;
-  let list;
   switch (listType) {
     case "wishlist":
-      list = user.wishlistId;
-      break;
+      return user.wishlistId;
     case "completed":
-      list = user.completedListId;
-      break;
+      return user.completedListId;
     case "uncompleted":
-      list = user.uncompletedListId;
-      break;
+      return user.uncompletedListId;
     default:
       toast.error("Something wrong");
-      return;
+      return null;
   }
-
+};
+const addToList = (listType) => {
+  const list = getListByType(listType);
+  if (list === null) return;
   gameListsStore.addGameToList(props.item.id, list).then((response) => {
     if (gameListsStore.isError) {
       toast.error(gameListsStore.error);
       gameListsStore.isError = false;
-    } else toast.success(response.message);
+    } else {
+      toast.success(response.message);
+    }
+  });
+};
+
+const removeGameFromList = (listType) => {
+  const list = getListByType(listType);
+  if (list === null) return;
+  gameListsStore.removeGameFromList(props.item.id, list).then((response) => {
+    if (gameListsStore.isError) {
+      toast.error(gameListsStore.error);
+      gameListsStore.isError = false;
+    } else {
+      toast.success(response.message);
+    }
   });
 };
 </script>

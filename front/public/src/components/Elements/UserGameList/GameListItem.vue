@@ -6,16 +6,21 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  isCurrentUser: {
+    type: Boolean,
+  },
 });
 </script>
 
 <template>
   <h1>{{ props.item.name }}</h1>
-  <ul>
+  <ul >
     <GameListGameItem
       v-for="game in props.item.games"
       :key="game.id"
       :item="game"
+      :isCurrentUser="props.isCurrentUser"
+      :listId="props.item.id"
     />
   </ul>
 </template>

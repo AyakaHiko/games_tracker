@@ -6,12 +6,20 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  isCurrentUser: {
+    type: Boolean,
+  },
 });
 </script>
 
 <template>
   <ul class="ml-1">
-    <UserGameListItem v-for="list in props.lists" :key="list.id" :item="list" />
+    <UserGameListItem
+      v-for="list in props.lists"
+      :key="list.id"
+      :isCurrentUser="props.isCurrentUser"
+      :item="list"
+    />
   </ul>
 </template>
 

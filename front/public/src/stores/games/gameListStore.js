@@ -37,6 +37,28 @@ export const useGameListsStore = defineStore("gameList", {
           this.isLoading = false;
         });
     },
+    async removeGameFromList(gameId, listId){
+      this.isLoading = true;
+      return await fetchService("/api/game-list/remove", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: {
+          game_id: gameId,
+          list_id: listId,
+        },
+      })
+        .then((response) => {
+          return response;
+        })
+        .catch((error) => {
+          this.error(error.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    },
     async addGameToList(gameId, listId) {
       this.isLoading = true;
       return await fetchService("/api/game-list/add", {
