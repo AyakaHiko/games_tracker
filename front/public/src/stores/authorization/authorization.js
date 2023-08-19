@@ -30,11 +30,11 @@ export const useAuthorizationStore = defineStore("authorization", {
         body: JSON.stringify(userData),
       })
         .then((response) => {
-          console.log(response);
-          this.login(response);
           if (response.status === 401) {
             this.logError("Unauthorized");
           }
+          else
+            this.login(response);
           return response;
         })
         .catch(() => {

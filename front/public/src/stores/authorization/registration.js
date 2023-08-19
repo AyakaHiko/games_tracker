@@ -23,6 +23,9 @@ export const useRegistrationStore = defineStore("registration", {
         body: JSON.stringify(newUser),
       })
         .then((response) => {
+          if (response.status === 401) {
+            this.logError("Unauthorized");
+          }
           return response;
         })
         .catch((error) => {
